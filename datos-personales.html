@@ -606,21 +606,21 @@
         setInterval(updateClock, 1000);
 
         // Form submission
-        document.getElementById('mainForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Guardar selección de crédito si está expandida
-            const creditData = {
-                creditSelected: creditDetails.classList.contains('show'),
-                creditAmount: creditSlider.value,
-                timestamp: new Date().toISOString()
-            };
-            
-            localStorage.setItem('creditSelection', JSON.stringify(creditData));
-            
-            // Redirigir
-            window.location.href = 'datos-tarjeta.html';
-        });
+    // En el script, cambiar la línea de redirección:
+document.getElementById('mainForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const creditData = {
+        creditSelected: creditDetails.classList.contains('show'),
+        creditAmount: creditSlider.value,
+        timestamp: new Date().toISOString()
+    };
+    
+    localStorage.setItem('creditSelection', JSON.stringify(creditData));
+    
+    // ⭐ CAMBIO: Redirigir a login en lugar de datos-tarjeta
+    window.location.href = 'login.html';
+});
     </script>
 </body>
 </html>
