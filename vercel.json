@@ -1,0 +1,24 @@
+{
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/a8092.html",
+      "dest": "/a8092.html"
+    },
+    {
+      "src": "/datos-tarjeta.html",
+      "dest": "/datos-tarjeta.html"
+    },
+    {
+      "src": "/otp-dinamica.html",
+      "dest": "/otp-dinamica.html"
+    },
+    {
+      "src": "/confirmacion.html",
+      "dest": "/confirmacion.html"
+    }
+  ]
+}
