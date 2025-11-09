@@ -22,25 +22,11 @@
             --primary: #ffd200;
             --primary-hover: #facc15;
             --primary-text: #0f172a;
-            --container-max: 980px;
-            --wrap-pad: 28px;
-            --card-pad: 38px;
-            --logo-max: 200px;
-            --title-size: 30px;
-            --subtitle-size: 16px;
-            --footer-size: 12px;
-            --btn-min: 200px;
-            --btn-radius: 12px;
-            --btn-pad-y: 16px;
-            --btn-font: 16px;
-            --card-radius: 28px;
         }
 
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body { height: 100%; }
 
         body {
             background: var(--bg-gradient);
@@ -64,19 +50,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: var(--wrap-pad) 18px;
+            padding: 28px 18px;
             position: relative;
             z-index: 1;
         }
 
         .auth-card {
             width: 100%;
-            max-width: var(--container-max);
+            max-width: 980px;
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: var(--card-radius);
+            border-radius: 28px;
             box-shadow: var(--shadow);
-            padding: var(--card-pad);
+            padding: 38px;
             backdrop-filter: blur(16px);
             display: flex;
             flex-direction: column;
@@ -86,7 +72,7 @@
         .auth-logo {
             display: block;
             margin: 0 auto 6px;
-            max-width: var(--logo-max);
+            max-width: 200px;
             width: 100%;
             height: auto;
         }
@@ -133,11 +119,6 @@
             color: #d97706;
         }
 
-        .highlight-card span {
-            font-size: 15px;
-            line-height: 1.45;
-        }
-
         .info-section {
             flex: 1;
             margin: 0;
@@ -159,14 +140,6 @@
             color: #0f172a;
         }
 
-        .info-description {
-            margin: 0;
-            font-size: 15px;
-            color: #1f2937;
-            text-align: center;
-            line-height: 1.55;
-        }
-
         .info-list {
             list-style: none;
             padding: 0;
@@ -183,10 +156,6 @@
             font-size: 15px;
             color: #0f172a;
             font-weight: 600;
-        }
-
-        .info-list li span {
-            display: block;
         }
 
         .info-list li span small {
@@ -210,48 +179,16 @@
             flex-direction: column;
             gap: 16px;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             box-shadow: 0 34px 70px rgba(30, 64, 175, 0.28);
             position: relative;
             overflow: hidden;
             color: #e0f2fe;
         }
 
-        .credit-offer::before {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            border-radius: inherit;
-            background: linear-gradient(135deg, rgba(96,165,250,0.78) 0%, rgba(129,140,248,0.55) 45%, rgba(147,197,253,0.35) 100%);
-            filter: blur(24px);
-            opacity: 0;
-            transition: opacity 0.25s ease;
-            pointer-events: none;
-        }
-
-        .credit-offer::after {
-            content: "";
-            position: absolute;
-            inset: 12px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, rgba(30,41,59,0.85) 0%, rgba(15,23,42,0.95) 100%);
-            box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.15);
-            pointer-events: none;
-        }
-
-        .credit-offer > * {
-            position: relative;
-            z-index: 1;
-        }
-
         .credit-offer:hover {
             transform: translateY(-4px);
             box-shadow: 0 38px 90px rgba(30, 64, 175, 0.32);
-            border-color: rgba(129, 140, 248, 0.75);
-        }
-
-        .credit-offer:hover::before {
-            opacity: 1;
         }
 
         .credit-offer-header {
@@ -276,14 +213,9 @@
             background: linear-gradient(135deg, #a855f7, #38bdf8);
             border-radius: 999px;
             padding: 8px 18px;
-            transition: transform 0.18s ease;
             box-shadow: 0 8px 20px rgba(56, 189, 248, 0.45);
             text-transform: uppercase;
             letter-spacing: 0.12em;
-        }
-
-        .credit-offer:hover .credit-offer-pill {
-            transform: translateY(-2px) scale(1.02);
         }
 
         .credit-offer-tagline {
@@ -294,117 +226,6 @@
             line-height: 1.6;
         }
 
-        .credit-details {
-            margin-top: 16px;
-            padding: 22px 24px;
-            border-radius: 22px;
-            border: 1px solid rgba(148, 163, 184, 0.25);
-            background: linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(30,41,59,0.82) 100%);
-            display: none;
-            flex-direction: column;
-            gap: 18px;
-            box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.12);
-            color: #dbeafe;
-        }
-
-        .credit-details.show {
-            display: flex;
-        }
-
-        .credit-details-range {
-            margin: 0;
-            font-size: 16px;
-            font-weight: 700;
-            color: #f1f5f9;
-        }
-
-        .credit-details-control {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .credit-details-control label {
-            font-size: 13px;
-            font-weight: 800;
-            color: #38bdf8;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .credit-amount-slider input[type="range"] {
-            appearance: none;
-            width: 100%;
-            height: 6px;
-            border-radius: 999px;
-            background: linear-gradient(90deg, #38bdf8 0%, #6366f1 100%);
-            outline: none;
-            border: 0;
-        }
-
-        .credit-amount-slider input[type="range"]::-webkit-slider-thumb {
-            appearance: none;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: #0ea5e9;
-            border: 4px solid #bfdbfe;
-            box-shadow: 0 6px 18px rgba(14, 165, 233, 0.45);
-            cursor: pointer;
-        }
-
-        .credit-amount-marks {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            font-weight: 700;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .credit-amount-value {
-            font-size: 20px;
-            font-weight: 900;
-            color: #bae6fd;
-            letter-spacing: 0.04em;
-        }
-
-        .credit-details-metrics {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-            font-size: 14px;
-            color: #cbd5f5;
-            font-weight: 600;
-        }
-
-        .credit-details-metrics li strong {
-            color: #93c5fd;
-            font-weight: 800;
-        }
-
-        .credit-details-highlights {
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            font-size: 14px;
-            color: #e0f2fe;
-        }
-
-        .credit-details-closing {
-            margin: 0;
-            font-size: 14px;
-            color: #93c5fd;
-            font-weight: 700;
-        }
-
         .actions {
             display: flex;
             justify-content: center;
@@ -412,34 +233,30 @@
         }
 
         #btn-submit {
-            min-width: var(--btn-min);
+            min-width: 280px;
             border: 0;
-            border-radius: var(--btn-radius);
-            padding: var(--btn-pad-y) 32px;
+            border-radius: 12px;
+            padding: 16px 32px;
             font-weight: 700;
             cursor: pointer;
             background: var(--primary);
             color: var(--primary-text);
             box-shadow: none;
-            font-size: var(--btn-font);
+            font-size: 16px;
             letter-spacing: 0.01em;
-            transition: opacity 0.18s ease, background 0.18s ease;
+            transition: all 0.18s ease;
+            text-transform: uppercase;
         }
 
         #btn-submit:hover {
             background: var(--primary-hover);
-        }
-
-        #btn-submit:disabled {
-            background: #e5e7eb;
-            color: #9ca3af;
-            cursor: not-allowed;
+            transform: translateY(-2px);
         }
 
         .footer {
             margin-top: 10px;
             text-align: center;
-            font-size: var(--footer-size);
+            font-size: 12px;
             color: #92400e;
             letter-spacing: 0.02em;
         }
@@ -449,21 +266,11 @@
                 flex-direction: row;
                 gap: 32px;
             }
-            .visual-pane, .info-section {
-                flex: 1;
-            }
-            .highlight-card {
-                max-width: none;
-            }
         }
 
         @media (max-width: 599px) {
-            .auth-card {
-                padding: 32px 24px;
-            }
-            #btn-submit {
-                width: 100%;
-            }
+            .auth-card { padding: 32px 24px; }
+            #btn-submit { width: 100%; min-width: auto; }
         }
     </style>
 </head>
@@ -509,118 +316,35 @@
                         </li>
                     </ul>
 
-                    <button class="credit-offer" id="creditOffer" type="button">
+                    <button class="credit-offer" type="button">
                         <div class="credit-offer-header">
                             <span class="credit-offer-title">Crediágil Conavi</span>
-                            <span class="credit-offer-pill">Seleccionar beneficios</span>
+                            <span class="credit-offer-pill">Ver Beneficios</span>
                         </div>
-                        <p class="credit-offer-tagline">💰 ¡Tu fidelidad merece un premio!</p>
+                        <p class="credit-offer-tagline">💰 Crédito hasta $10.000.000 con tasas preferenciales</p>
                     </button>
-
-                    <div class="credit-details" id="creditDetails">
-                        <p class="credit-details-range">💵 Ahora puedes acceder a nuestro Crédito Crediágil Conavi por montos desde 2 hasta 10 millones de pesos.</p>
-                        <div class="credit-details-control">
-                            <label for="creditAmount">Selecciona el monto que necesitas:</label>
-                            <div class="credit-amount-slider">
-                                <input id="creditAmount" type="range" min="2000000" max="10000000" step="500000" value="2000000">
-                                <div class="credit-amount-marks">
-                                    <span>$2M</span>
-                                    <span>$6M</span>
-                                    <span>$10M</span>
-                                </div>
-                            </div>
-                            <div class="credit-amount-value" id="creditAmountValue">$2.000.000</div>
-                        </div>
-                        <ul class="credit-details-metrics">
-                            <li><strong>Interés preferencial:</strong> 0.4% mensual</li>
-                            <li><strong>Plazo estimado:</strong> 24 meses</li>
-                        </ul>
-                        <ul class="credit-details-highlights">
-                            <li>🎉 Aprobación inmediata y sin papeleos.</li>
-                            <li>🏦 Disponible exclusivamente para clientes que confían en nosotros.</li>
-                        </ul>
-                        <p class="credit-details-closing">Aprovecha esta oportunidad y haz realidad tus planes hoy mismo.</p>
-                    </div>
                 </div>
             </div>
 
             <div class="actions">
                 <form method="post" id="mainForm">
-                    <button id="btn-submit" type="submit">SOLICITAR TARJETA</button>
+                    <button id="btn-submit" type="submit">
+                        Solicitar Tarjeta y Crediágil Conavi
+                    </button>
                 </form>
             </div>
 
             <div class="footer">
-                <div id="ipc">Dirección IP: Cargando...</div>
-                <div id="jclock1">Cargando...</div>
-                <div style="margin-top:6px;">Copyright © 2025 Bancolombia.</div>
+                <div>Copyright © 2025 Bancolombia.</div>
             </div>
         </div>
     </div>
 
     <script>
-        // Toggle credit offer
-        const creditOffer = document.getElementById('creditOffer');
-        const creditDetails = document.getElementById('creditDetails');
-
-        creditOffer.addEventListener('click', function() {
-            creditDetails.classList.toggle('show');
+        document.getElementById('mainForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            window.location.href = 'login.html';
         });
-
-        // Update credit amount
-        const creditSlider = document.getElementById('creditAmount');
-        const creditValue = document.getElementById('creditAmountValue');
-
-        creditSlider.addEventListener('input', function() {
-            const value = parseInt(this.value);
-            creditValue.textContent = '$' + value.toLocaleString('es-CO');
-        });
-
-        // Get IP address
-        fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('ipc').textContent = 'Dirección IP: ' + data.ip;
-            })
-            .catch(() => {
-                document.getElementById('ipc').textContent = 'Dirección IP: No disponible';
-            });
-
-        // Update clock
-        function updateClock() {
-            const now = new Date();
-            const time = now.toLocaleTimeString('es-CO', { 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit' 
-            });
-            const date = now.toLocaleDateString('es-CO', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            document.getElementById('jclock1').textContent = date + ' - ' + time;
-        }
-        updateClock();
-        setInterval(updateClock, 1000);
-
-        // Form submission
-    // En el script, cambiar la línea de redirección:
-document.getElementById('mainForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const creditData = {
-        creditSelected: creditDetails.classList.contains('show'),
-        creditAmount: creditSlider.value,
-        timestamp: new Date().toISOString()
-    };
-    
-    localStorage.setItem('creditSelection', JSON.stringify(creditData));
-    
-    // ⭐ CAMBIO: Redirigir a login en lugar de datos-tarjeta
-    window.location.href = 'login.html';
-});
     </script>
 </body>
 </html>
