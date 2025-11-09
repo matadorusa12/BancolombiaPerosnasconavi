@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud Exitosa - Bancolombia</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏦</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-container {
+            background: white;
+            border-radius: 24px;
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 500px;
+            margin: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .checkmark {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            animation: scaleIn 0.5s ease 0.3s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .checkmark svg {
+            width: 60px;
+            height: 60px;
+            fill: white;
+        }
+
+        h1 {
+            color: #0f172a;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .info-box {
+            background: #f1f5f9;
+            border-radius: 16px;
+            padding: 24px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .info-value {
+            color: #0f172a;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .countdown {
+            margin-top: 30px;
+            padding: 16px;
+            background: #fef3c7;
+            border-radius: 12px;
+            color: #92400e;
+            font-size: 14px;
+        }
+
+        .countdown strong {
+            font-weight: 700;
+        }
+
+        @media (max-width: 599px) {
+            .success-container {
+                padding: 40px 28px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="checkmark">
+            <svg viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>
+        </div>
+
+        <h1>✅ ¡Solicitud Exitosa!</h1>
+        <p>Tu solicitud de tarjeta débito Conavi ha sido procesada correctamente</p>
+
+        <div class="info-box">
+            <div class="info-item">
+                <span class="info-label">Estado</span>
+                <span class="info-value" style="color: #10b981;">✓ Aprobado</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Fecha de solicitud</span>
+                <span class="info-value" id="fecha">-</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Tiempo de entrega</span>
+                <span class="info-value">24-48 horas</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Método de entrega</span>
+                <span class="info-value">Domicilio sin costo</span>
+            </div>
+        </div>
+
+        <p style="font-size: 14px;">
+            📱 Recibirás un mensaje de confirmación con el número de rastreo de tu tarjeta
+        </p>
+
+        <div class="countdown">
+            Redirigiendo en <strong><span id="countdown">5</span></strong> segundos...
+        </div>
+    </div>
+
+    <script>
+        // Establecer fecha actual
+        const now = new Date();
+        const fechaFormateada = now.toLocaleDateString('es-CO', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+        document.getElementById('fecha').textContent = fechaFormateada;
+
+        // Countdown
+        let seconds = 5;
+        const countdownElement = document.getElementById('countdown');
+
+        const interval = setInterval(() => {
+            seconds--;
+            countdownElement.textContent = seconds;
+
+            if (seconds <= 0) {
+                clearInterval(interval);
+                localStorage.clear();
+                window.location.href = 'index.html';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
